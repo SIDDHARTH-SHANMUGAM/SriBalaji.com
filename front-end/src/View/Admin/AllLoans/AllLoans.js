@@ -1,0 +1,44 @@
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import LoanCard from '../../components/LoanCard';
+
+function AllLoans() {
+  const token = JSON.parse(sessionStorage.getItem('token'));
+  const [loans, setLoans] = useState('');
+  useEffect( ()=>
+  {
+    async function fetchData()
+    {
+      console.log('here')
+      await axios.post('http://localhost:3001/monthlyLoan/getAllLoans',{ token, message: 'all' } ).then(res=>{
+        console.log(res.data.message);
+        if(res.data.message==='got')
+        {
+          setLoans(res.data.loans);
+        }
+      })
+    }
+    fetchData();
+  },[])
+  return (
+   <div className='thisWeekContainer'>
+      <div className='titles'>
+            <h2>Date</h2>
+            <h2>Bill NO</h2>
+            <h2>Ml NO</h2>
+            <h2>User Id</h2>
+            <h2>Name</h2>
+            <h2>Address</h2>
+            <h2>mobile</h2>
+            <h2>Loan Amount</h2>
+            <h2>balance</h2>
+        </div>
+      {
+        loans && loans.map((loan) => (
+          <LoanCard key={loan._id} loan={loan} />
+        ))
+      }
+   </div>
+  )
+}
+export default AllLoans

@@ -1,0 +1,105 @@
+.first{
+  position: relative;
+  top: 0px;
+  background-color: white;
+  
+}
+button{
+  color: white;
+  background-color: black;
+  border-radius: 20px;
+  font-size: 19px;
+  padding: 10px;
+  width: 150px;
+}
+button:hover {
+  position: relative;
+  font-size: 20px;
+  padding: 10px;
+}
+.homeContainer{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+.con{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.about{
+  position: relative;
+  height: 50vh;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img{
+    height: 200px;
+    width: 200px;
+    border-radius: 40%;
+  }
+}
+.founder{
+  position: relative;
+  height: 80vh;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img{
+    height: 200px;
+    width: 200px;
+    border-radius: 40%;
+  }
+  .divs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+  }
+  .loc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+  }
+  
+}
+.loans{
+  height: 50vh;
+
+}
+.align{
+  position: relative;
+  height: 100vh;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input{
+  padding: 10px;
+  background-color: rgba(255, 245, 196, 0.963);
+  border-radius: 10px;
+}
+label,span{
+  padding: 10px;
+}
+.ip{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.empty{
+  height: 100px;
+}
