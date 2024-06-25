@@ -2,8 +2,8 @@ const Bill = require('../models/BillModel');
 
 const addBill = async(req, res)=>{
   try{
-    const { billNo, loanType,UserId, loanNo, isPayment, receivedAmount, paidAmount, paidDues}= req.body;
-    
+    const { billNo, loanType, userId, loanNo, isPayment, receivedAmount, paidAmount, paidDues}= req.body;
+    console.log(paidDues);
     const str = new Date().getDate()+1;
     const str2 = new Date().getMonth()+1;
     const str3 = new Date().getFullYear();
@@ -11,7 +11,7 @@ const addBill = async(req, res)=>{
     const data =new Bill({
       date: today,
       billNo: billNo,
-      UserId: UserId,
+      userId: userId,
       loanType: loanType,
       loanNo: loanNo,
       isPayment: isPayment,
@@ -29,7 +29,8 @@ const addBill = async(req, res)=>{
     res.json({message: 'Network error'})
   }
 }
-  const getBill = async (req, res)=> {
+
+const getAllBill = async (req, res)=> {
     try{
       const bills =await Bill.find({}).limit(50);
       if(bills)
@@ -43,4 +44,4 @@ const addBill = async(req, res)=>{
     }
 }
 
-module.exports = {addBill, getBill };
+module.exports = {addBill, getAllBill };

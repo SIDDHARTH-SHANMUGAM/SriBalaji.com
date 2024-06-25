@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 function LoanCard({ loan }) {
+  
+  const token = JSON.parse(sessionStorage.getItem('token'));
   const [user, setUser] = useState('');
   const [date, setDate] = useState('');
   const [isToView, setIsToView] =useState(false);
@@ -21,11 +23,12 @@ function LoanCard({ loan }) {
     if (loan) {
       async function fetchData() {
         try {
-          const res = await axios.post('http://localhost:3001/user/getUser', {
-            message: 'id',
-            value: loan.UserId,
+          const res = await axios.post('http://localhost:3001/user/getUserBy', {
+            token,
+            by: 'userId',
+            value: loan.userId,
           });
-          if (res.data.message === 'userfound') {
+          if (res.data.message === 'got') {
             setUser(res.data.user);
           }
         } catch (error) {
@@ -40,7 +43,6 @@ function LoanCard({ loan }) {
       fetchData();
     }
   }, [loan]);
-
   if(isToView)
   {
     veiwDetail = <SingleLoanContainer>
@@ -59,7 +61,7 @@ function LoanCard({ loan }) {
           <p>{date && date}</p>
           <p>{loan.billNo}</p>
           <p>{loan.loanNo}</p>
-          <p>{loan.UserId}</p>
+          <p>{loan.userId}</p>
           <p>{user.firstName+' '+user.lastName}</p>
           <p>{user.address}</p>
           <p>{user.mobile}</p>
@@ -94,12 +96,12 @@ function Due({monthData, getPaidDues})
 return (
     <DueCon >
       <Temp className={monthData.isPaid?'paid':monthData.isHasOverDue?'overDue':'notPaid'}>
-        <p>Due Date : {formatDate(monthData.date)}</p>
-        <p >amount pending: {monthData.amount}</p>
-        <p>bill No : {monthData.billNo}</p>
-        <p>Over Due Amount : {monthData.overDueAmount}</p>
+        <p>{formatDate(monthData.date)}</p>
+        <p >{monthData.amount}</p>
+        <p> {monthData.billNo}</p>
+        <p> {monthData.overDueAmount}</p>
         {!monthData.isPaid && isClicked&& <button onClick={handlePay}>pay</button>}
-        {monthData.isPaid && <p>paid On : {formatDate(monthData.paidDate)}</p>}
+        {monthData.isPaid && <p> {formatDate(monthData.paidDate)}</p>}
       </Temp>
 
     </DueCon>
@@ -131,7 +133,11 @@ return (
 const Temp = styled.div`
   display: flex;
   flex-direction: row;
-  width: auto;
+  width: 100%;
+  p{
+    padding: 5px;
+    width: 170px;
+  }
 `;
 const SingleLoanContainer= styled.div`
   position : absolute;

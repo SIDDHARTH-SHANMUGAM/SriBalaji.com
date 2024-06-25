@@ -1,13 +1,14 @@
 const express = require("express");
-
+const {authAdmin} = require('../middleware/AuthUser');
 const billRouter = express.Router();
-const {addBill, getBill} = require('../controllers/BillController')
+const {addBill, getAllBill} = require('../controllers/BillController')
 
 // get
-billRouter.route('/getBill').get(getBill);
 
 // post
-billRouter.route('/addBill').post(addBill);
+billRouter.route('/getAllBill').post(authAdmin,getAllBill);
+billRouter.route('/addBill').post(authAdmin, addBill);
+
 // put
 
 module.exports = billRouter;

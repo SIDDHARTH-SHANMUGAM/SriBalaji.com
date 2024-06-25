@@ -1,5 +1,6 @@
 import React from 'react'
 import './Bill.css'
+
 function Bill({bill, user}) {
   const formatDate = (date) => {
     const day = date.substring(8, 10)

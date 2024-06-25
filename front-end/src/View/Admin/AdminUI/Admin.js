@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Navbar from '../../Navbar/Navbar';
 import Loans from '../AllLoans/AllLoans';
 import MakeBill from '../MakeBill/MakeBill';
-import AllBills from '../RecentBills/AllBills';
+import AllBills from '../AllBills/AllBills';
 import ThisWeek from '../ThisWeek/ThisWeek';
 import TodayList from '../TodayList/TodayList';
 

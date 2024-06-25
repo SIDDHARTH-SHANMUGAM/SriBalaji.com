@@ -3,7 +3,7 @@ const MonthlyLoan = require('../models/MonthlyLoanModel')
 
 const addLoan = async(req, res)=>{
   try{
-    const { billNo, loanNo, UserId, guarantorId, amount}= req.body;
+    const { billNo, loanNo, userId, guarantorId, amount}= req.body;
     const dues= {};
     const currentDate = new Date()
     for (let i = 1; i <= 5; i++) {
@@ -30,7 +30,7 @@ const addLoan = async(req, res)=>{
       date: today,
       billNo: billNo,
       loanNo: loanNo,
-      UserId : UserId,
+      userId : userId,
       guarantorId: guarantorId,
       loanAmount: amount,
       dues: dues,
@@ -47,7 +47,7 @@ const addLoan = async(req, res)=>{
 }
 
 const getAllLoans = async (req, res)=> {
-  const {message, UserId} = req.body;
+  const {message, userId} = req.body;
     try{
       let loans
       if(message==='all')
@@ -56,11 +56,11 @@ const getAllLoans = async (req, res)=> {
       }
       else if(message==='getAsBorrower')
       {
-        loans =await MonthlyLoan.find({UserId: UserId})
+        loans =await MonthlyLoan.find({userId: userId})
       }
       else if(message==='getAsGaurantor')
       {
-        loans =await MonthlyLoan.find({guarantorId: UserId})
+        loans =await MonthlyLoan.find({guarantorId: userId})
       }
 
       if(loans)
@@ -78,7 +78,7 @@ const getAllLoans = async (req, res)=> {
 
 const getLoan = async (req, res) =>{
   try{
-    const {message, loanNo} = req.body;
+    const { loanNo} = req.body;
     const loan = await MonthlyLoan.findOne({loanNo: loanNo})
     if(loan)
     {
@@ -156,7 +156,7 @@ const getTodayLoan = async (req, res) => {
   }
 }
 
-const makeLoan = async (req, res) => {
+const payLoan = async (req, res) => {
   const { loanId, paidDues } = req.body;
 
   try {
@@ -170,9 +170,7 @@ const makeLoan = async (req, res) => {
         c++;
       }
       loan.pendingAmount = (loan.loanAmount/5)*(5-c);
-
       await loan.save();
-
       res.json({ success: true, message: 'done', loan: loan });
       }
     } catch (error) {
@@ -232,7 +230,7 @@ cron.schedule('45 0 * * *', async() => {
     });
     for(const loan of loans)
     {
-      const data =new Message({ UserId: loan.UserId, message: "due date is going to expire within today please make sure to pay the due correctly", isSeen: false })
+      const data =new Message({ userId: loan.userId, message: "due date is going to expire within today please make sure to pay the due correctly", isSeen: false })
       data.save().then(()=> {console.log({message:'MessageAdded'})})
       .catch((e)=> {console.log({message: 'errorOccuredInMessageInserting'},e)})
     }
@@ -266,7 +264,7 @@ cron.schedule('45 0 * * *', async() => {
   });
   for(const loan of loans)
     {
-      const data =new Message({ UserId: loan.UserId, message: "due date is going to expire within 7 days please make sure to pay the due correctly", isSeen: false })
+      const data =new Message({ userId: loan.userId, message: "due date is going to expire within 7 days please make sure to pay the due correctly", isSeen: false })
       data.save().then(()=> {console.log({message:'MessageAdded'})})
       .catch((e)=> {console.log({message: 'errorOccuredInMessageInserting'},e)})
     }
@@ -297,7 +295,7 @@ cron.schedule('45 0 * * *', async() => {
 });
   for(const loan of loans)
     {
-      const data =new Message({ UserId: loan.UserId, message: "due date has been expired please make sure to pay the due correctly else OverDue may increases", isSeen: false })
+      const data =new Message({ userId: loan.userId, message: "due date has been expired please make sure to pay the due correctly else OverDue may increases", isSeen: false })
       data.save().then(()=> {console.log({message:'MessageAdded'})})
       .catch((e)=> {console.log({message: 'errorOccuredInMessageInserting'},e)})
     }
@@ -309,4 +307,4 @@ cron.schedule('45 0 * * *', async() => {
   }
 });
 
-module.exports = {addLoan , getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, makeLoan};
+module.exports = {addLoan , getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan};

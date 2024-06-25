@@ -1,10 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Due } from '../../components/LoanCard';
 import './MakeBill.css'
 
 function Payment({billNo}) {
     
+  const token = JSON.parse(sessionStorage.getItem('token'));
     const [payLoanNo, setPayLoanNo] = useState('');
     const [loanType, setLoanType] = useState('monthly');
     const [mobile, setMobile] = useState('');
@@ -37,19 +38,19 @@ function Payment({billNo}) {
         if(e.target.value)
         {
             await axios.post('http://localhost:3001/monthlyLoan/getLoan', {
-                message:'monthly', loanNo: e.target.value
+                token, message:'monthly', loanNo: e.target.value
             }).then(async res=>{
                 if(res.data.message==='got')
                 {
                     const loan = res.data.loan;
-                    setUserId(loan.UserId);
+                    setUserId(loan.userId);
                     setGuarantorUserId(loan.guarantorId)
                     if(loan)
                     {
                         setLoan(loan);
-                        await axios.post('http://localhost:3001/user/getUser', {message: 'id', value: loan.UserId})
+                        await axios.post('http://localhost:3001/user/getUser', {token, by: 'id', value: loan.userId})
                         .then(res=>{
-                            if(res.data.message==='userfound')
+                            if(res.data.message==='got')
                             {
                                 const user= res.data.user;
                                 setUser(user);
@@ -61,9 +62,9 @@ function Payment({billNo}) {
                                 setMessage('user Not found');
                             }
                         })
-                        await axios.post('http://localhost:3001/user/getUser', {message: 'id', value: loan.guarantorId})
+                        await axios.post('http://localhost:3001/user/getUser', {token, by: 'id', value: loan.guarantorId})
                         .then(res=>{
-                            if(res.data.message==='userfound')
+                            if(res.data.message==='got')
                             {
                                 const user= res.data.user;
                                 setGuarantor(user);
@@ -90,7 +91,6 @@ function Payment({billNo}) {
     const [paidAmount, setPaidAmount ] = useState(0);
     const paidDues =(monthData)=>{
         if (payDues.indexOf(monthData) === -1) {
-            console.log(monthData)
             setPayDues([...payDues, monthData]);
             setPaidAmount(paidAmount+monthData.amount);
             setPayDueString(", "+String(monthData.monthNo)+", ");
@@ -99,14 +99,21 @@ function Payment({billNo}) {
     const handleBill =async ()=>{
         if(payDues)
         {
-            await axios.post('http://localhost:3001/monthlyLoan/makeLoan',{
-                loanId : loan.loanNo , paidDues: payDues
-            }).then(async (res)=>{
-                if(res.data.message==='done')
-                {
-                    await axios.post('http://localhost:3001/',{billNo : billNo, loanType:loanType, UserId: userId, loanNo: loan.loanNo, isPayment:'true', receivedAmount: 0, paidAmount, paidDues});
-                }
+            await axios.post('http://localhost:3001/monthlyLoan/payLoan',{
+                token, loanId : loan.loanNo , paidDues: payDues
             })
+            .then((res)=>{
+                alert(res);
+            })
+            await axios.post('http://localhost:3001/bill/addBill',{
+                token, billNo : billNo, loanType:loanType, userId: userId, loanNo: loan.loanNo, 
+                isPayment:'true', receivedAmount: 0, paidAmount, paidDues: payDues
+            }).then((res)=>{
+                alert(res);
+
+            }).catch((e)=>{
+                alert(e);
+            });
         }
     }
 
@@ -216,7 +223,14 @@ function Payment({billNo}) {
                 </div>
             </>}
         </div>
-        {!showBill&&userName&&<div>
+        {!showBill&&userName&&<div className='loanCont'>
+            <div className='loanNav'>
+                <p>Due Date </p>
+                <p >Pending </p>
+                <p>Bill No </p>
+                <p>Over Due </p>
+                <p>Paid On </p>
+            </div>
             {loan.dues && Object.values(loan.dues).map((monthData) => (
                 <Due key={monthData._id} monthData={monthData} getPaidDues= {paidDues}/>
             ))}

@@ -3,21 +3,25 @@ import React, { useEffect, useState } from 'react'
 import Bill from '../Bill/Bill';
 
 function AllBills() {
+
+  const token = JSON.parse(sessionStorage.getItem('token'));
   const [bills, setBills] = useState('');
+
   useEffect( ()=>
   {
     async function fetchData()
     {
-      await axios.get('http://localhost:3001/bill/getBill').then(res=>{
+      await axios.post('http://localhost:3001/bill/getAllBill',{ token }).then((res)=>{
         if(res.data.message==='got')
         {
           setBills(res.data.bills); 
         }
+      }).catch((e)=>{
+        console.log(e);
       })
     }
     fetchData();
   },[])
-  
   return (
     <div className='thisWeekContainer'>
       <div className='titles'>
@@ -40,6 +44,8 @@ function AllBills() {
 }
 
  function BillCard({ bill }) {
+  
+  const token = JSON.parse(sessionStorage.getItem('token'));
   const [user, setUser] = useState('');
   const [date, setDate] = useState('');
   const [view, setView] = useState(false);
@@ -56,11 +62,12 @@ function AllBills() {
   useEffect(() => {
     async function fetchData() {
     try {
-      const res = await axios.post('http://localhost:3001/user/getUser', {
-        message: 'id',
-        value: bill.UserId,
+      const res = await axios.post('http://localhost:3001/user/getUserBy', {
+        token,
+        by: 'userId',
+        value: bill.userId,
       });
-      if (res.data.message === 'userfound') {
+      if (res.data.message === 'got') {
         setUser(res.data.user);
       }
     } catch (error) {
@@ -75,7 +82,6 @@ function AllBills() {
   }, [bill.date]);
 
   const handleView = () => {
-    console.log(view);
     setView(!view);
   };
 

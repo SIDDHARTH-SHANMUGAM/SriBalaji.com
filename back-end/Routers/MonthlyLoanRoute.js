@@ -1,18 +1,18 @@
 const express = require("express");
-
+const {authAdmin} = require('../middleware/AuthUser');
 const loanRouter = express.Router();
-const {addLoan, getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, makeLoan} = require('../controllers/MonthlyLoanController')
+const {addLoan, getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan} = require('../controllers/MonthlyLoanController')
 
 
 // get
-loanRouter.route('/getTodayLoan').get(getTodayLoan);
-loanRouter.route('/getThisWeekLoan').get(getThisWeekLoan);
+loanRouter.route('/getTodayLoan').get(authAdmin, getTodayLoan);
+loanRouter.route('/getThisWeekLoan').get(authAdmin, getThisWeekLoan);
 
 // post
-loanRouter.route('/addLoan').post(addLoan);
-loanRouter.route('/getAllLoans').post(getAllLoans);
-loanRouter.route('/getLoan').post(getLoan);
-loanRouter.route('/makeLoan').post(makeLoan);
+loanRouter.route('/addLoan').post(authAdmin, addLoan);
+loanRouter.route('/getAllLoans').post(authAdmin, getAllLoans);
+loanRouter.route('/getLoan').post(authAdmin, getLoan);
+loanRouter.route('/payLoan').post(authAdmin, payLoan);
 
 // put
 

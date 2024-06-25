@@ -1,24 +1,29 @@
 const User = require('../models/UserModel');
 const Counter = require('../models/CounterModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const login= async(req, res)=>{
   const{mobile, password}= req.body;
   try{
-    const check = await User.findOne({mobile: mobile})
-    if(check)
+    const user = await User.findOne({mobile: mobile})
+    if(user)
     {
-      const user= await User.findOne({mobile: mobile, password: password})
-      if(user)
-      {
-        res.json({message : "Exist" , user: user});
-      }
-      else
-        res.json({message: "Password is Wrong" });
+      bcrypt.compare(password, user.password)
+        .then(isCorrect=>{
+            if(!isCorrect) 
+              res.json({message: "Password is Wrong"});
+
+            const token = jwt.sign({
+                userId: user.userId,
+                isAdmin: user.isAdmin,
+            }, process.env.JWT_SECRET,{expiresIn: "24h"});
+            res.json({message : "Exist" ,token: token });
+           })
     }
     else
-    {
-      res.json({ message :"not Exist" });
-    }
+      res.json({message: "Mobile Not Exist" });
+    
   }
   catch(e){
     res.json({message : "Network Error" });
@@ -49,19 +54,31 @@ const signIn = async(req, res)=> {
       else {
           seqId = cd.seq;
       }
-      const data ={
-        UserId : seqId,
-        firstName : firstName,
-        lastName : lastName,
-        mobile : mobile,
-        address: address,
-        password: password,
-        isAdmin: 'false'
-      }
-      await User.insertMany([data]);
+      bcrypt.hash(password, 10)
+      .then((hp) =>{
+        const user =new User({
+          userId : seqId,
+          firstName : firstName,
+          lastName : lastName,
+          mobile : mobile,
+          address: address,
+          password: hp,
+          isAdmin: 'false'
+        })
+        user.save().then(()=>{
+            const token = jwt.sign({
+                userId: user.userId,
+                isAdmin: user.isAdmin,
+            }, process.env.JWT_SECRET,{expiresIn: "24h"});
 
-      const user = await User.findOne({ UserId: seqId}).exec();
-      res.json({message: "signedIn", user: user})
+            res.json({message: "signedIn", token: token});
+        }).catch((e)=>{
+            res.json({message: 'error', error: e});
+        })
+      })
+      .catch((e)=>{
+        res.json({message: 'error', error: e});
+      })
     }
   }
   catch(e){
@@ -70,22 +87,38 @@ const signIn = async(req, res)=> {
 }
 
 const getUser = async(req, res) =>{
-    const {message, value}= req.body;
+    const userId = req.userId;
   try{
-    if(message==='id')
+    const user = await User.findOne({userId});
+    if(user){
+      res.json({message:'got', user: user})
+    }
+    else
+      res.json({message:'usernotfound'})
+  }
+  catch(e)
+  {
+    console.log(e)
+  }
+}
+const getUserBy = async(req, res) =>{
+    const {value, by} = req.body;
+  try{
+    if(by ==='userId')
     {
-      const user = await User.findOne({UserId: value});
+      const user = await User.findOne({userId: value});
       if(user){
-        res.json({message:'userfound', user: user})
+        res.json({message:'got', user: user})
       }
       else
         res.json({message:'usernotfound'})
     }
-    else if(message=='mobile')
+    else
     {
       const user = await User.findOne({mobile: value});
-      if(user)
-        res.json({message:'userfound', user: user})
+      if(user){
+        res.json({message:'got', user: user})
+      }
       else
         res.json({message:'usernotfound'})
 
@@ -98,17 +131,17 @@ const getUser = async(req, res) =>{
 }
 
 const updateProfile = async (req, res) =>{
-  console.log('hi')
     try {
-      const {UserId, firstName, lastName, address, mobile} = req.body ;
+      const { firstName, lastName, address, mobile} = req.body ;
+      const userId = req.userId;
 
-      console.log(UserId, firstName, lastName, address, mobile )
-      if (!UserId) {
+      console.log(userId, firstName, lastName, address, mobile )
+      if (!userId) {
         return res.json({ error: 'User ID is required' });
       }
 
-      const user = await User.findOneAndUpdate(
-        { UserId: UserId },
+      await User.findOneAndUpdate(
+        { userId: userId },
         { 
           firstName: firstName, 
           lastName: lastName , 
@@ -117,12 +150,28 @@ const updateProfile = async (req, res) =>{
         },
         { new: true }
       );
-      res.json({ message: 'updated' , user: user });
+      res.json({ message: 'updated' });
     } catch (error) {
       console.log('Error:', error); 
       res.json({ message: 'Server error' });
     }
 }
 
+const isAdmin = async (req, res)=>{
+  const userId = req.userId;
+  try{
+    const user = await User.findOne({userId});
+    if(user){
+      res.json({message: user.isAdmin})
+    }
+    else
+      res.json({message:'usernotfound'})
+  }
+  catch(e)
+  {
+    console.log(e)
+  }
+}
 
-module.exports= {login, signIn, getUser, updateProfile};
+
+module.exports= {login, signIn, getUser, updateProfile, isAdmin, getUserBy};

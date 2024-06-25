@@ -10,7 +10,7 @@ const BillSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        UserId:{
+        userId:{
             type: String,
             required: true
         },

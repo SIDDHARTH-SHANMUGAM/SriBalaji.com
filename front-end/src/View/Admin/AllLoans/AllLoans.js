@@ -9,9 +9,7 @@ function AllLoans() {
   {
     async function fetchData()
     {
-      console.log('here')
       await axios.post('http://localhost:3001/monthlyLoan/getAllLoans',{ token, message: 'all' } ).then(res=>{
-        console.log(res.data.message);
         if(res.data.message==='got')
         {
           setLoans(res.data.loans);

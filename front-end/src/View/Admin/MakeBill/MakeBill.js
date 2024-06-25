@@ -39,7 +39,6 @@ function MakeBill() {
             token, billNo, loanNo, userId, guarantorId, amount
             }).then(
                 async (res)=>{
-                    console.log(res);
                     if(res.data.message==='loanAdded')
                     {
                         await axios.post('http://localhost:3001/counter/increament', { reqId: 'mlLoanId' }).then( async()=>{
@@ -50,7 +49,6 @@ function MakeBill() {
                             await axios.post('http://localhost:3001/bill/addBill', {
                                 token, billNo, loanType, userId, loanNo, isPayment, receivedAmount, paidAmount, paidDues
                             }).then(async (res)=>{
-                                console.log(res)
                                 if(res.data.message==='billAdded')
                                 {
                                     await axios.post('http://localhost:3001/counter/increament', { reqId: 'billId' })
@@ -96,9 +94,9 @@ function MakeBill() {
         const x =e.target.value;
         if(x.toString().length===9)
         {
-            await axios.post('http://localhost:3001/user/getUser', {message: 'id', value: e.target.value})
+            await axios.post('http://localhost:3001/user/getUserBy', { token, by: 'userId', value: e.target.value})
             .then(res=>{
-                if(res.data.message==='userfound')
+                if(res.data.message==='got')
                 {
                     const user = res.data.user;
                     setUser(user);
@@ -126,9 +124,9 @@ function MakeBill() {
         const x =e.target.value;
         if(x.toString().length===9)
         {
-            await axios.post('http://localhost:3001/user/getUser', {message: 'id', value: e.target.value})
+            await axios.post('http://localhost:3001/user/getUserBy', { token,  by: 'userId', value: e.target.value})
             .then(res=>{
-                if(res.data.message==='userfound')
+                if(res.data.message==='got')
                 {
                     const user = res.data.user;
                     setGuarantor(user);
@@ -157,9 +155,9 @@ function MakeBill() {
         const x =e.target.value;
         if(x.toString().length===10)
         {
-            await axios.post('http://localhost:3001/user/getUser', {message: 'mobile', value: e.target.value})
+            await axios.post('http://localhost:3001/user/getUserBy', { token,  by: 'mobile', value: e.target.value})
             .then(res=>{
-                if(res.data.message==='userfound')
+                if(res.data.message==='got')
                 {
                     const user= res.data.user;
                     setUser(user)
@@ -187,9 +185,9 @@ function MakeBill() {
         const x =e.target.value;
         if(x.toString().length===10)
         {
-            await axios.post('http://localhost:3001/user/getUser', {message: 'mobile', value: e.target.value})
+            await axios.post('http://localhost:3001/user/getUserBy', { token, by: 'mobile', value: e.target.value})
             .then(res=>{
-                if(res.data.message==='userfound')
+                if(res.data.message==='got')
                 {
                     const user= res.data.user;
                     setGuarantor(user)
