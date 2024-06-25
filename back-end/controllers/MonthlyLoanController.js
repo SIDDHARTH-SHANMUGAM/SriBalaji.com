@@ -126,6 +126,7 @@ const getThisWeekLoan = async (req, res) => {
 }
 
 const getTodayLoan = async (req, res) => {
+  console.log('here');
   const str = new Date().getDate();
   const str2 = new Date().getMonth()+1;
   const str3 = new Date().getFullYear();
@@ -180,131 +181,135 @@ const payLoan = async (req, res) => {
 }
 
 var cron = require('node-cron');
-
-cron.schedule('45 0 * * *', async() => {
-  try{
-      let loans = await MonthlyLoan.find({})
-      if(loans)
-      {
-        for (const loan of loans) {
-          for (const month in loan.dues) {
-            if (loan.dues[month].date < new Date() && !loan.dues[month].isPaid) 
-            {
-              const dueAmount = ((loan.dues[month].amount * 1) / 100)* Math.round((new Date()-loan.dues[month].date) / (1000 * 60 * 60 * 24));
-              loan.dues[month].isHasOverDue = true;
-              loan.dues[month].overDueAmount = dueAmount;
-            }
+cron.schedule('20 32 21 * * *', async () => {
+  console.log('here in schedule');
+  try {
+    let loans = await MonthlyLoan.find({});
+    if (loans) {
+      for (const loan of loans) {
+        for (const month in loan.dues) {
+          if (loan.dues[month].date < new Date() && !loan.dues[month].isPaid) {
+            const dueAmount = ((loan.dues[month].amount * 1) / 100) * Math.round((new Date() - loan.dues[month].date) / (1000 * 60 * 60 * 24));
+            loan.dues[month].isHasOverDue = true;
+            loan.dues[month].overDueAmount = dueAmount;
           }
-          try {
-              await loan.save();
-            } catch (error) {
-              console.error(`Error saving loan: ${loan._id}`, error);
-            }
+        }
+        try {
+          await loan.save();
+        } catch (error) {
+          console.error(`Error saving loan: ${loan._id}`, error);
         }
       }
     }
-    catch(e)
-    {
-      console.log(e);
-    }
-  try{
-  const str = new Date().getDate();
-  const str2 = new Date().getMonth()+1;
-  const str3 = new Date().getFullYear();
-  const today = new Date(`${str3}-${str2}-${str}`);
-  const endOfDay = new Date(today);
-  endOfDay.setDate(today.getDate() + 2);
+  } catch (e) {
+    console.log(e);
+  }
+
+  try {
+    const today = new Date();
+    const endOfDay = new Date(today);
+    endOfDay.setDate(today.getDate() + 2);
+
     const loans = await MonthlyLoan.find({
       $and: [
         {
           $or: [
-            { "dues.month1.date": { $gte: today, $lt: endOfDay } , "dues.month1.isPaid": false},
-            { "dues.month2.date": { $gte: today, $lt: endOfDay } , "dues.month2.isPaid": false},
-            { "dues.month3.date": { $gte: today, $lt: endOfDay } , "dues.month3.isPaid": false},
-            { "dues.month4.date": { $gte: today, $lt: endOfDay } , "dues.month4.isPaid": false},
-            { "dues.month5.date": { $gte: today, $lt: endOfDay } , "dues.month5.isPaid": false}
+            { "dues.month1.date": { $gte: today, $lt: endOfDay }, "dues.month1.isPaid": false },
+            { "dues.month2.date": { $gte: today, $lt: endOfDay }, "dues.month2.isPaid": false },
+            { "dues.month3.date": { $gte: today, $lt: endOfDay }, "dues.month3.isPaid": false },
+            { "dues.month4.date": { $gte: today, $lt: endOfDay }, "dues.month4.isPaid": false },
+            { "dues.month5.date": { $gte: today, $lt: endOfDay }, "dues.month5.isPaid": false }
           ]
         },
         { "pendingAmount": { $gt: 0 } }
       ]
     });
-    for(const loan of loans)
-    {
-      const data =new Message({ userId: loan.userId, message: "due date is going to expire within today please make sure to pay the due correctly", isSeen: false })
-      data.save().then(()=> {console.log({message:'MessageAdded'})})
-      .catch((e)=> {console.log({message: 'errorOccuredInMessageInserting'},e)})
+
+    for (const loan of loans) {
+      const data = new Message({
+        userId: loan.userId,
+        message: "due date is going to expire within today please make sure to pay the due correctly",
+        isSeen: false
+      });
+      data.save()
+        .then(() => { console.log({ message: 'MessageAdded' }) })
+        .catch((e) => { console.log({ message: 'errorOccuredInMessageInserting' }, e) });
     }
-  
+  } catch (e) {
+    console.log(e);
   }
-  catch(e)
-  {
-    console.log(e)
-  }
-  try{
-  const str = new Date().getDate()+7;
-  const str2 = new Date().getMonth()+1;
-  const str3 = new Date().getFullYear();
-  const today = new Date(`${str3}-${str2}-${str}`);
-  const endOfWeek = new Date(today);
-  endOfWeek.setDate(today.getDate() + 2);
-  console.log(today, endOfWeek)
-  const loans = await MonthlyLoan.find({
-    $and: [
-      {
-        $or: [
-          { "dues.month1.date": { $gte: today, $lt: endOfWeek }, "dues.month1.isPaid": false },
-          { "dues.month2.date": { $gte: today, $lt: endOfWeek }, "dues.month2.isPaid": false },
-          { "dues.month3.date": { $gte: today, $lt: endOfWeek }, "dues.month3.isPaid": false },
-          { "dues.month4.date": { $gte: today, $lt: endOfWeek }, "dues.month4.isPaid": false },
-          { "dues.month5.date": { $gte: today, $lt: endOfWeek }, "dues.month5.isPaid": false }
-        ]
-      },
-      { "pendingAmount": { $gt: 0 } }
-    ]
-  });
-  for(const loan of loans)
-    {
-      const data =new Message({ userId: loan.userId, message: "due date is going to expire within 7 days please make sure to pay the due correctly", isSeen: false })
-      data.save().then(()=> {console.log({message:'MessageAdded'})})
-      .catch((e)=> {console.log({message: 'errorOccuredInMessageInserting'},e)})
-    }
-  }
-  catch(e)
-  {
-    console.log(e)
-    res.json({message: 'Network error'});
-  }
-  try{
-  const str = new Date().getDate()+7;
-  const str2 = new Date().getMonth()+1;
-  const str3 = new Date().getFullYear();
-  const today = new Date(`${str3}-${str2}-${str}`);
-  const loans = await MonthlyLoan.find({
-  $and: [
-    {
-      $or: [
-        { "dues.month1.date": { $lte: today }, "dues.month1.isPaid": false },
-        { "dues.month2.date": { $lte: today }, "dues.month2.isPaid": false },
-        { "dues.month3.date": { $lte: today }, "dues.month3.isPaid": false },
-        { "dues.month4.date": { $lte: today }, "dues.month4.isPaid": false },
-        { "dues.month5.date": { $lte: today }, "dues.month5.isPaid": false }
+
+  try {
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+
+    const endOfWeek = new Date(nextWeek);
+    endOfWeek.setDate(nextWeek.getDate() + 2);
+
+    const loans = await MonthlyLoan.find({
+      $and: [
+        {
+          $or: [
+            { "dues.month1.date": { $gte: nextWeek, $lt: endOfWeek }, "dues.month1.isPaid": false },
+            { "dues.month2.date": { $gte: nextWeek, $lt: endOfWeek }, "dues.month2.isPaid": false },
+            { "dues.month3.date": { $gte: nextWeek, $lt: endOfWeek }, "dues.month3.isPaid": false },
+            { "dues.month4.date": { $gte: nextWeek, $lt: endOfWeek }, "dues.month4.isPaid": false },
+            { "dues.month5.date": { $gte: nextWeek, $lt: endOfWeek }, "dues.month5.isPaid": false }
+          ]
+        },
+        { "pendingAmount": { $gt: 0 } }
       ]
-    },
-    { "pendingAmount": { $gt: 0 } }
-  ]
-});
-  for(const loan of loans)
-    {
-      const data =new Message({ userId: loan.userId, message: "due date has been expired please make sure to pay the due correctly else OverDue may increases", isSeen: false })
-      data.save().then(()=> {console.log({message:'MessageAdded'})})
-      .catch((e)=> {console.log({message: 'errorOccuredInMessageInserting'},e)})
+    });
+
+    for (const loan of loans) {
+      const data = new Message({
+        userId: loan.userId,
+        message: "due date is going to expire within 7 days please make sure to pay the due correctly",
+        isSeen: false
+      });
+      data.save()
+        .then(() => { console.log({ message: 'MessageAdded' }) })
+        .catch((e) => { console.log({ message: 'errorOccuredInMessageInserting' }, e) });
     }
+  } catch (e) {
+    console.log(e);
   }
-  catch(e)
-  {
-    console.log(e)
-    res.json({message: 'Network error'});
+
+  try {
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+
+    const loans = await MonthlyLoan.find({
+      $and: [
+        {
+          $or: [
+            { "dues.month1.date": { $lte: nextWeek }, "dues.month1.isPaid": false },
+            { "dues.month2.date": { $lte: nextWeek }, "dues.month2.isPaid": false },
+            { "dues.month3.date": { $lte: nextWeek }, "dues.month3.isPaid": false },
+            { "dues.month4.date": { $lte: nextWeek }, "dues.month4.isPaid": false },
+            { "dues.month5.date": { $lte: nextWeek }, "dues.month5.isPaid": false }
+          ]
+        },
+        { "pendingAmount": { $gt: 0 } }
+      ]
+    });
+
+    for (const loan of loans) {
+      const data = new Message({
+        userId: loan.userId,
+        message: "due date has been expired please make sure to pay the due correctly else OverDue may increases",
+        isSeen: false
+      });
+      data.save()
+        .then(() => { console.log({ message: 'MessageAdded' }) })
+        .catch((e) => { console.log({ message: 'errorOccuredInMessageInserting' }, e) });
+    }
+  } catch (e) {
+    console.log(e);
   }
 });
+
 
 module.exports = {addLoan , getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan};

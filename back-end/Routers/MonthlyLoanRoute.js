@@ -5,8 +5,8 @@ const {addLoan, getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan} = 
 
 
 // get
-loanRouter.route('/getTodayLoan').get(authAdmin, getTodayLoan);
-loanRouter.route('/getThisWeekLoan').get(authAdmin, getThisWeekLoan);
+loanRouter.route('/getTodayLoan').post(authAdmin, getTodayLoan);
+loanRouter.route('/getThisWeekLoan').post(authAdmin, getThisWeekLoan);
 
 // post
 loanRouter.route('/addLoan').post(authAdmin, addLoan);
