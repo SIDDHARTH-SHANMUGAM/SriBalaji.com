@@ -93,7 +93,7 @@ function Payment({billNo}) {
         if (payDues.indexOf(monthData) === -1) {
             setPayDues([...payDues, monthData]);
             setPaidAmount(paidAmount+monthData.amount);
-            setPayDueString(", "+String(monthData.monthNo)+", ");
+            setPayDueString(payDueString+" "+String(monthData.monthNo));
         }
     }
     const handleBill =async ()=>{
@@ -102,18 +102,20 @@ function Payment({billNo}) {
             await axios.post('http://localhost:3001/monthlyLoan/payLoan',{
                 token, loanId : loan.loanNo , paidDues: payDues
             })
-            .then((res)=>{
-                alert(res);
-            })
+            
             await axios.post('http://localhost:3001/bill/addBill',{
                 token, billNo : billNo, loanType:loanType, userId: userId, loanNo: loan.loanNo, 
-                isPayment:'true', receivedAmount: 0, paidAmount, paidDues: payDues
+                isPayment:'true', receivedAmount: 0, paidAmount, paidDues: payDueString
             }).then((res)=>{
-                alert(res);
+                setShowBill(res.data.bill);
 
             }).catch((e)=>{
                 alert(e);
             });
+
+            await axios.post('http://localhost:3001/counter/increament', { reqId: 'billId' });
+
+        console.log(showBill);
         }
     }
 

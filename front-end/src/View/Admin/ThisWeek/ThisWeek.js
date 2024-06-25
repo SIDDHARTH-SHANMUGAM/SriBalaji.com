@@ -5,12 +5,13 @@ import './Thisweek.css'
 
 
 function ThisWeek() {
+  const token = JSON.parse(sessionStorage.getItem('token'));
 const [loans, setLoans] = useState('');
   useEffect( ()=>
   {
     async function fetchData()
     {
-      await axios.get('http://localhost:3001/monthlyLoan/getThisWeekLoan',{message:'all',UserId:''}).then(res=>{
+      await axios.post('http://localhost:3001/monthlyLoan/getThisWeekLoan',{ token }).then(res=>{
         if(res.data.message==='got')
         {
           setLoans(res.data.loans);
