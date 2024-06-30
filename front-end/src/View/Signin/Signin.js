@@ -177,7 +177,7 @@ function Signin() {
               </div>
             }
             <div>
-              <p>Already have an Account</p>
+              <p>Have an Account</p>
               <button onClick={gotoLogin}>Login</button>
             </div>
           </div>

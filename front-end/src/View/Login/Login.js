@@ -92,7 +92,7 @@ function Login() {
               </div>
             }
             <div className='gotobrother'>
-              <p>Create New Account</p>
+              <p>Need an Account?</p>
               <button onClick={gottoSignin}>signIn</button>
             </div>
           </div>
