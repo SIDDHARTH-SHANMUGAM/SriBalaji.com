@@ -48,8 +48,13 @@ function Profile() {
     try{
       const formData = new FormData();
       formData.append('photo', photo);
+      formData.append('userId', user.userId);
 
-      await axios.put("http://localhost:3001/user/uploadImage", {formData , token})
+      await axios.post("http://localhost:3001/uploadImage", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
       .then((res) => {
         if (res.data.message === 'done') {
           window.location.reload();

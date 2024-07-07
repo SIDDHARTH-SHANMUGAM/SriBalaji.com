@@ -11,7 +11,6 @@
   background: #1c92d2; 
   background: -webkit-linear-gradient(to right, #1c92d2, #f2fcfe); 
   background: linear-gradient(to right, #1c92d2, #f2fcfe);
-
 }
 
 .welcome{
@@ -27,6 +26,7 @@
   h1{
     position: relative;
     font-size: 5em;
+    cursor: pointer;
     letter-spacing: 8px;
     font-family: Helvetica;
     color: #2fc468;
@@ -36,7 +36,6 @@
     -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(0, 0, 0, 0.379));
     line-height: 0.70em;
     animation: animate 50s linear infinite;
-    
   }
 }
 @keyframes animate {
@@ -56,12 +55,8 @@
     ;
   }
 }
-.sl{
-  font-size: 25px;
-  color: white;
-}
 
-.about{
+.avail{
   position: relative;
   width: 90%;
   margin: 20px;
@@ -76,166 +71,125 @@
   justify-content: space-evenly;
   align-items: center;
 
-  h1{
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 40px; 
-    color: black;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.first{
-  position: relative;
-  top: 0px;
-  background-color: white;
+    .sl{
+      font-size: 40px;
+      color: white;
+      text-shadow: 0 0 10px #03bcf4;
+      text-align: center;
+    }
   
-}
-
-
-input{
-  padding: 10px;
-  background-color: rgba(255, 245, 196, 0.963);
-  border-radius: 10px;
-}
-label,span{
-  padding: 10px;
-}
-.ip{
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.empty{
-  height: 100px;
-}
-
-table{
-  border: 2px solid rgb(245, 244, 248);
-  border-radius: 20px;
-   background-color: #2222241e;
-
-  th, tr, td{
-    margin: 20px;
-  }
-  tr{
-    border-radius: 20px;
-
-  }
-  thead{
-    border-radius: 10px;
-  }
-}
-
-
-
-
-
-
-.conCaro {
-    height: 400px;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-
-  .card {
-      width: 30px;
-      border-radius: .75rem;
-      background-size: cover;
-      cursor: pointer;
-      overflow: hidden;
-      border-radius: 2rem;
-      margin: 0 10px;
+  .carosuelContainer {
+      height: 300px;
       display: flex;
-      align-items: flex-end;
-      transition: .8s cubic-bezier(.28,-0.03,0,.99);
-      box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
+      flex-direction: row;
+      justify-content: start;
 
-    .description{
+    .card {
+        width: 30px;
+        border-radius: .75rem;
+        background-size: cover;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 2rem;
+        margin: 0 10px;
+        display: flex;
+        align-items: flex-end;
+        transition: 3s cubic-bezier(.28,-0.03,0,.99);
+        box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
+
+      .description{
+        display: none;
+      }
+      filter: blur(1px);
+    -webkit-filter: blur(1px);
+    }
+
+  .card2{
+    width: 520px;
+    margin: 0 10px;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 2rem;
+    height: 100%;
+    transition-delay: 0s;
+    transition: all 3s ease;
+    text-align: center;
+    box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
+    .icon{
       display: none;
     }
-    filter: blur(1px);
-  -webkit-filter: blur(1px);
+    .description{
+      color: white;
+      font-size: 30px;
+      text-shadow: 0 0 10px #022638;
+    }
   }
-
-.card2{
-  width: 520px;
-  margin: 0 10px;
-  display: flex;
-  justify-content:end;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 2rem;
-  height: 100%;
-  transition-delay: 0s;
-  transition: all 3s ease;
-  text-align: center;
-  box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
-  .icon{
-    display: none;
+  .card, .card2{
+    .icon{
+      background-color: white;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 10px;
+    }
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
-  .description{
-    color: white;
-    font-size: 30px;
-    text-shadow: 0 0 10px #022638;
+    
+    .card2[for="c1"], .card[for="c1"] {
+        background-image: url('../../../public/asserts/medical.jpg'); 
+    }
+    .card2[for="c2"], .card[for="c2"]  {
+        background-image: url('../../../public/asserts/education.jpg'); 
+    }
+    .card2[for="c3"], .card[for="c3"]  {
+        background-image: url('../../../public/asserts/startups.jpg'); 
+    }
+    .card2[for="c4"], .card[for="c4"]  {
+        background-image: url('../../../public/asserts/vehicle.jpg'); 
+    }
+    .card2[for="c5"], .card[for="c5"]  {
+        background-image: url('../../../public/asserts/wedding.jpg');
+    }
+    .card2[for="c6"], .card[for="c6"]  {
+        background-image: url('../../../public/asserts/home.jpg'); 
+    }
+    .card2[for="c7"], .card[for="c7"]  {
+        background-image: url('../../../public/asserts/vaccation.jpg');
+    }
   }
-}
-.card, .card2{
-  /* background-color: #2222245b; */
-  .icon{
-    background-color: white;
-    width: 25px;
-    height: 25px;
-    text-align: center;
-    border-radius: 50%;
-    font-size: 16px;
-    font-weight: 10px;
-  }
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
-  
-}
-  
-  .card2[for="c1"], .card[for="c1"] {
-      background-image: url('../../../public/asserts/medical.jpg'); 
-  }
-  .card2[for="c2"], .card[for="c2"]  {
-      background-image: url('../../../public/asserts/education.jpg'); 
-  }
-  .card2[for="c3"], .card[for="c3"]  {
-      background-image: url('../../../public/asserts/startups.jpg'); 
-  }
-  .card2[for="c4"], .card[for="c4"]  {
-      background-image: url('../../../public/asserts/vehicle.jpg'); 
-  }
-  .card2[for="c5"], .card[for="c5"]  {
-      background-image: url('../../../public/asserts/wedding.jpg');
-  }
-  .card2[for="c6"], .card[for="c6"]  {
-      background-image: url('../../../public/asserts/home.jpg'); 
-  }
-  .card2[for="c7"], .card[for="c7"]  {
-      background-image: url('../../../public/asserts/vaccation.jpg');
-  }
+    table{
+      border: 2px solid rgb(245, 244, 248);
+      box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
+      border-collapse: collapse;
+      background-color: #2222241e;
+      margin-bottom: 40px;
+      padding: 40px;
+      text-align: center;
+      td{
+        padding: 20px;
+        padding-left: 25px;
+      }
+      th, tr{
+        padding: 12px;
+      }
+      thead{
+        color: #fff;
+        background-color: #03bcf485;
+        font-size: 30px;
+        padding: 2px;
+      }
+      tr{
+        border:solid rgba(255, 255, 255, 0);
+      }
+      tbody tr:nth-of-type(even){
+        background-color: #fffcdc40;
+      }
+    }
 }

@@ -10,6 +10,7 @@ html {
 
 ::-webkit-scrollbar {
   width: 0.3rem;
+  height: 0.3rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -38,4 +39,21 @@ button:hover {
   position: relative;
   font-size: 20px;
   padding: 10px;
+  cursor: pointer;
+}
+
+input{
+  padding: 10px;
+  background-color: rgba(255, 245, 196, 0.963);
+  border-radius: 10px;
+}
+label,span{
+  padding: 10px;
+}
+.ip{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.empty{
+  height: 10px;
 }

@@ -47,20 +47,19 @@ const upload = multer(
   }
 ).single('photo')
 app.post('/uploadImage', (req, res) => {
-    console.log('hi');
   upload(req, res, async (err) => {
     if (err) {
       console.log(err);
       return res.json({ message: 'Image upload failed' });
     }
     try {
-      const userId = req.body.UserId;
+      const userId = req.body.userId; 
       if (!userId) {
         return res.json({ error: 'User ID is required' });
       }
       const imageUrl = `/Images/${req.file.filename}`;
       const user = await User.findOneAndUpdate(
-        { UserId: userId },
+        { userId: userId },
         { imageUrl: imageUrl },
         { new: true }
       );

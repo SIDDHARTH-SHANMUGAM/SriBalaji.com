@@ -181,7 +181,7 @@ const payLoan = async (req, res) => {
 }
 
 var cron = require('node-cron');
-cron.schedule('20 32 21 * * *', async () => {
+cron.schedule('00 10 01 * *', async () => {
   console.log('here in schedule');
   try {
     let loans = await MonthlyLoan.find({});

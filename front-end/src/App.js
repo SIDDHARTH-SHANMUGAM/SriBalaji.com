@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './View/Login/Login';
 import Home from './View/Home/Home';
@@ -8,7 +8,9 @@ import History from './View/History/History';
 import Signin from './View/Signin/Signin';
 import Notification from './View/Notification/Notification';
 import AllNotification from './View/Notification/AllNotification';
+import PageNotFound from './View/PageNotFound/PageNotFound';
 import Bill from './View/Admin/Bill/Bill';
+
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
 
@@ -65,6 +67,7 @@ function App() {
                 </Protected>
                 } 
               /> */}
+              <Route path="*" element={ <PageNotFound/> } />
 
 
           </Routes>

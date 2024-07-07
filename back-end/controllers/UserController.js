@@ -101,6 +101,7 @@ const getUser = async(req, res) =>{
     console.log(e)
   }
 }
+
 const getUserBy = async(req, res) =>{
     const {value, by} = req.body;
   try{
