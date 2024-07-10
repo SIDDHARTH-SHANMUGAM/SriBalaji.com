@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 function LoanCard({ loan }) {
+
+  console.log(loan)
   
   const token = JSON.parse(sessionStorage.getItem('token'));
   const [user, setUser] = useState('');
@@ -53,7 +55,6 @@ function LoanCard({ loan }) {
 
     mask= <MenuMask onClick={()=>{setIsToView(false)}}></MenuMask>
   }
-
   return (
     <LoanCardContainer>
       {loan && user&&(

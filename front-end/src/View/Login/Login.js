@@ -64,11 +64,10 @@ function Login() {
   return (
     <div className='loginContainer'>
         <form onSubmit={handleLogin} className='drop-left' >
-          <img src='/illustrations/login.svg' className='drop-down' alt=''/>
           <div className='ipContainer drop-up'>
-            <div>
-            <h1>LogIn</h1>
-          </div>
+            <div className='sl'>
+              LogIn
+            </div>
             <div className='ip'>
               <input
                 type="text"
@@ -92,8 +91,9 @@ function Login() {
               </div>
             }
             <div className='gotobrother'>
-              <p>Need an Account?</p>
-              <button onClick={gottoSignin}>signIn</button>
+              <div onClick={gottoSignin} className='sl2'>
+                Need an Account?
+              </div>
             </div>
           </div>
           <div>

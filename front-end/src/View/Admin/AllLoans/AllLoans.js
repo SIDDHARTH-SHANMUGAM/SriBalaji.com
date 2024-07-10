@@ -18,6 +18,7 @@ function AllLoans() {
     }
     fetchData();
   },[])
+  
   return (
    <div className='thisWeekContainer'>
       <div className='titles'>

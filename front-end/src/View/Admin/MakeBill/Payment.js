@@ -48,7 +48,7 @@ function Payment({billNo}) {
                     if(loan)
                     {
                         setLoan(loan);
-                        await axios.post('http://localhost:3001/user/getUser', {token, by: 'id', value: loan.userId})
+                        await axios.post('http://localhost:3001/user/getUserBy', {token, by: 'userId', value: loan.userId})
                         .then(res=>{
                             if(res.data.message==='got')
                             {
@@ -62,7 +62,7 @@ function Payment({billNo}) {
                                 setMessage('user Not found');
                             }
                         })
-                        await axios.post('http://localhost:3001/user/getUser', {token, by: 'id', value: loan.guarantorId})
+                        await axios.post('http://localhost:3001/user/getUserBy', {token, by: 'id', value: loan.guarantorId})
                         .then(res=>{
                             if(res.data.message==='got')
                             {

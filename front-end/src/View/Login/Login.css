@@ -10,13 +10,14 @@
 *{
   font-family:  var(--body-font);
 }
+
 .loginContainer{
-  position: absolute;
+  position: relative;
   top: 0px;
   left: 0px;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -25,45 +26,49 @@
 form{
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 100vh;
   justify-content: center;
   align-items: center;
   height: 500px;
   border-radius: 10px;
-  background-color: #53e3a6;
-  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: linear-gradient(45deg, #50a3a2 0%, #53e3a6 100%);
+  background-color: #29292c;
   box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.626);
 
 }
-
-.imgImage{
-  object-fit: cover;
-  object-position: center;
+.ipContainer .sl{
+  color: white;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ipContainer .sl2{
+  color: white;
+}
+.ipContainer .sl2:hover{
+  color: #6197f8;
+  cursor: pointer;
+}
+.gotobrother{
+  display: flex;
+  color: black;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 600px) {
+  overflow: auto;
+
   form{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 95%;
-    height: 95%;
-
-  }
-  form img{
-    position: absolute;
-    top: 10%;
-    width: 50%;
+    height: 120%;
 
   }
   .ipContainer{
     position: absolute;
     width: 45%;
-    top: 55%;
+    top: 35%;
   }
   .errorBox{
     width: 50%;
@@ -78,10 +83,6 @@ form{
   form{
     justify-content: space-around;
   }
-  form img{
-    top: 10%;
-    width: 50%;
-  }
   .errorBox{
     max-width: 350px;
     background-color: rgba(28, 22, 22, 0.71);
@@ -90,7 +91,6 @@ form{
   .errorBox img{
     width: 20%;
     border-radius: 10%;
-
   }
 
 }
