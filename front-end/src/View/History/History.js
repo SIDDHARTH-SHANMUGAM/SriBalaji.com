@@ -1,49 +1,49 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import Navbar from '../Navbar/Navbar';
+import './History.css'
 
 function History() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const [loansAsBorrower, setLoansAsBorrower] = useState('');
-    const [loansAsGaurantor, setLoansAsGaurantor] = useState('');
+    const token = JSON.parse(sessionStorage.getItem('token'));
+    const [loans, setHistory] = useState('');
     useEffect( ()=>
     {
         async function fetchData()
         {
-            await axios.post('http://localhost:3001/monthlyLoan/getAllLoans', {message:'getAsBorrower', UserId: user.UserId}).then(res=>{
+            await axios.post('http://localhost:3001/monthlyLoan/getHistory', { token: token }).then(res=>{
                 if(res.data.message==='got')
                 {
-                    setLoansAsBorrower(res.data.loans);
+                    setHistory(res.data.loans);
                 }
             })
         }
         fetchData();
-    },[])
-    useEffect( ()=>
-    {
-        async function fetchData()
-        {
-            await axios.post('http://localhost:3001/monthlyLoan/getAllLoans', {message:'getAsGaurantor', UserId: user.UserId}).then(res=>{
-                if(res.data.message==='got')
-                {
-                    setLoansAsGaurantor(res.data.loans);
-                }
-            })
-        }
-        fetchData();
-    },[])
+    },[token])
 
-    console.log( loansAsGaurantor);
+
   return (
-    <HistoryContainer>
+    <div className='HistoryContainer'>
         <Navbar/>
-    </HistoryContainer>
+
+        <div className='map'>
+        {
+            loans && loans.map((loan) => (
+                <HistoryCard key={loan._id} loan={loan} />
+        ))
+        }
+        </div>
+    </div>
   )
 }
 
-const HistoryContainer = styled.div`
+function HistoryCard({loan}){
+    console.log(loan);
+    return <div className='loanCardContainer'>
+        <div>Loan No: {loan.loanNo}</div>
+        <div>{loan.role}</div>
+        <div>{loan.pendingAmount}</div>
 
-`;
+    </div>
+}
 
 export default History

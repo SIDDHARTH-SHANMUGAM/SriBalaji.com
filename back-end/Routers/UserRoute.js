@@ -10,7 +10,7 @@ const {login, signIn, getUser, updateProfile, isAdmin, getUserBy} = require('../
 userRouter.route('/login').post(login);
 userRouter.route('/SignIn').post(signIn);
 userRouter.route('/getUser').post(authUser, getUser);
-userRouter.route('/isAdmin').post(isAdmin);
+userRouter.route('/isAdmin').post(authUser, isAdmin);
 userRouter.route('/getUserBy').post(authAdmin, getUserBy);
 
 // put

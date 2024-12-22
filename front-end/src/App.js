@@ -11,43 +11,11 @@ import AllNotification from './View/Notification/AllNotification';
 import PageNotFound from './View/PageNotFound/PageNotFound';
 import Bill from './View/Admin/Bill/Bill';
 
-// import axios from 'axios';
-// import { useEffect, useState } from 'react';
-
-// function Protected({children }){
-//   const [isAdmin, setIsAdmin] = useState(false); 
-
-//   useEffect(()=>{
-//   const fetch= ()=>{
-//     const token = JSON.parse(sessionStorage.getItem('token'));
-//     if(token)
-//     {
-//       axios.post('http://localhost:3001/user/authAdmin', {token}).then((res)=>{
-//         if(res.data.message===true)
-//         {
-//           setIsAdmin(true);
-//         }
-//       })
-//       .catch((er)=>{
-//         console.log(er)
-//       })
-//     }
-//   }
-//   }, [])
-
-//   console.log(isAdmin);
-
-//   if(isAdmin)
-//     return children
-//   else
-//     return <Navigate to='/' replace />
-
-// }
-
 function App() {
 
   return (
-      <div className='appContainer'>
+      <div className='app-container'>
+        
         <BrowserRouter>
           <Routes>
             <Route path='/' element={ <Home/> } />
@@ -59,15 +27,7 @@ function App() {
             <Route path='/notification' element={ <Notification/> } />
             <Route path='/allNotification' element={ <AllNotification/> } />
             <Route path='/admin' element={ <Admin/> } />
-            {/* <Route 
-              path='/admin' 
-              element={ 
-                <Protected>
-                  <Admin/> 
-                </Protected>
-                } 
-              /> */}
-              <Route path="*" element={ <PageNotFound/> } />
+            <Route path="*" element={ <PageNotFound/> } />
 
 
           </Routes>

@@ -84,20 +84,15 @@ function Login() {
               />
               <span>Password</span>
             </div>
-            {error===""&&password&&mobile
-              &&
-              <div>
-                <button type="submit">Log In</button>
-              </div>
-            }
+            <div className='submit'>
+              <button className={'buttonNotActive'} type="submit">Log In</button>
+            </div>
             <div className='gotobrother'>
               <div onClick={gottoSignin} className='sl2'>
                 Need an Account?
               </div>
             </div>
           </div>
-          <div>
-        </div>
       </form>
       {
         error&&

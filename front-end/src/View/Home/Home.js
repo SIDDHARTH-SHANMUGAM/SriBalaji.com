@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css';
-import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import Login from '../Login/Login';
+import { Swiper, SwiperSlide} from 'swiper/react';
+import 'swiper/css';
+import { Autoplay } from 'swiper/modules';
 
 function Home() {
   
@@ -12,243 +13,105 @@ function Home() {
   const gotoLogin = ()=>{
     navigate('/login');
   }
-  const [pic1, setPic1] = useState(true);
-  const [pic2, setPic2] = useState(false);
-  const [pic3, setPic3] = useState(false);
-  const [pic4, setPic4] = useState(false);
-  const [pic5, setPic5] = useState(false);
-  const [pic6, setPic6] = useState(false);
-  const [pic7, setPic7] = useState(false);
-
-  const setOne= ()=>{
-    setPic1(true);
-    setPic2(false);
-    setPic3(false);
-    setPic4(false);
-    setPic5(false);
-    setPic6(false);
-    setPic7(false);
-  }
-  const setTwo= ()=>{
-    setPic2(true);
-    setPic1(false);
-    setPic3(false);
-    setPic4(false);
-    setPic5(false);
-    setPic6(false);
-    setPic7(false);
-  }
-  const setThree= ()=>{
-    setPic3(true);
-    setPic1(false);
-    setPic2(false);
-    setPic4(false);
-    setPic5(false);
-    setPic6(false);
-    setPic7(false);
-  }
-  const setFour= ()=>{
-    setPic4(true);
-    setPic2(false);
-    setPic3(false);
-    setPic1(false);
-    setPic5(false);
-    setPic6(false);
-    setPic7(false);
-  }
-  const setFive= ()=>{
-    setPic5(true);
-    setPic2(false);
-    setPic3(false);
-    setPic4(false);
-    setPic1(false);
-    setPic6(false);
-    setPic7(false);
-  }
-  const setSix= ()=>{
-    setPic6(true);
-    setPic2(false);
-    setPic3(false);
-    setPic4(false);
-    setPic5(false);
-    setPic1(false);
-    setPic7(false);
-  }
-  const setSeven= ()=>{
-    setPic7(true);
-    setPic2(false);
-    setPic3(false);
-    setPic4(false);
-    setPic5(false);
-    setPic6(false);
-    setPic1(false);
-  }
+ 
 
   const [onScrollBoolean, setScrollBoolean] = useState(false);
-
-
-  const [cursorX, setCursorX] = useState('');
-  const [cursorY, setCursorY] = useState('');
-
   const changeBackground = ()=>{
-    if(window.scrollY>=250)
-      setScrollBoolean(true);
-    else
+    if(window.scrollY<80)
       setScrollBoolean(false);
+    else
+      setScrollBoolean(true);
   }
-
   window.addEventListener('scroll', changeBackground);
 
-  window.addEventListener('mousemove', (e) =>{
-    setCursorX(e.screenX -50);
-    setCursorY(e.screenY -130);
-  });
+  const obj = [
+    { img: 'medical', text:'Medical', color:''},
+    { img: 'education', text:'Education', color:''},
+    { img: 'startups', text:'Startups', color:''},
+    { img: 'marriage', text:'Wedding', color:''},
+    { img: 'home', text:'Home Rennovation', color:''},
+    { img: 'vaccation', text:'Vaccation', color:''},
+    { img: 'vehicle', text:'Vehicle', color:''},
+  ];
 
-  
-  const variants = {
-    default :{
-      x: cursorX,
-      y:cursorY
-    }
-  }
-  
+  const [active , setActive ] = useState();
+
+  useEffect(() => {
+    const elements = document.querySelectorAll('.avails');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('drop-left');
+        } else {
+          entry.target.classList.remove('drop-left');
+        }
+      });
+    }, { threshold: 0 });
+
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-<div >
-  <motion.div 
-    initial={{ x: "100%" }}
-    className={'cursor1 '} 
-    variants={variants}
-    animate = 'default'
-   />
-  <Navbar/>
-  <div className={onScrollBoolean? 'homeContainer active':'homeContainer'}>
+  <div className='home-outer'>
+    <Navbar/>
+    <div className={onScrollBoolean? 'homeContainer active':'homeContainer'}>
     {!token&&
       <div className='welcome drop-down'>
-        <h1 className='drop-up'> Sri Balaji Finance</h1>
+        <div className='head1 drop-up'> Sri Balaji Finance</div>
         <p className='drop-right sl'>We are here for Your Emergency. Grow with us</p>
-        <button onClick={gotoLogin}>Get Started </button>
+        <div className='button-container'>
+          <button className='button' onClick={gotoLogin}>Get Started </button>
+        </div>
       </div>
     }
-    <div className='avail'>
-      <div >
-        <div className='sl'>Loans Available for</div>
-        <div className='carosuelContainer'>
-          <label for='c1' className ={pic1?'card2 ':'card'} onClick={setOne}>
-            <div class="icon">1</div>
-            <div class="description">
-              Medical Emergency
-            </div>
-          </label>
-          <label for='c2' className ={pic2?'card2 ':'card'} onClick={setTwo}>
-            <div class="icon">2</div>
-            <div class="description">
-              Education Need
-            </div>
-          </label>
-          <label for='c3' className ={pic3?'card2 ':'card'} onClick={setThree}>
-            <div class="icon">3</div>
-            <div class="description">
-              Start Up Support
-            </div>
-          </label>
-          <label for='c4' className ={pic4?'card2 ':'card'} onClick={setFour}>
-            <div class="icon">4</div>
-            <div class="description">
-              Vehicle Financing
-            </div>
-          </label>
-          <label for='c5' className ={pic5?'card2 ':'card'} onClick={setFive}>
-            <div class="icon">5</div>
-            <div class="description">
-              Wedding Expenses
-            </div>
-          </label>
-          <label for='c6' className ={pic6?'card2 ':'card'} onClick={setSix}>
-            <div class="icon">6</div>
-            <div class="description">
-              Home Renovation
-            </div>
-          </label>
-          <label for='c7' className ={pic7?'card2 ':'card'} onClick={setSeven}>
-            <div class="icon">7</div>
-            <div class="description">
-              Vacation Expenses
-            </div>
-          </label>
-        </div>{/* caroseulContainer */}
-    </div>{/** avials */}
-    </div>
-      <div className='loans'>
-        <div className='items'>
-          <div className='title'>
-            ML - Monthly Loan
-          </div>
-          <div className='explaination'>
-            <div className='controller'>
-              <p>total 5 months of dues</p>
-              <p>0.1% of due Amount is considered to be over due as penality</p>
-              <p>5.8% Interest Rate</p>
-              <p>Amount Start from 10000 to 40000</p>
-            </div>
-          </div>
-        </div>
-        <div className='items'>
-          <div className='title'>
-            YL - Yearly Loan
-          </div>
-          <div className='explaination'>
-            <div className='controller'>
-              <p>total 12 months of dues</p>
-              <p>0.2% of due Amount is considered to be over due as penality</p>
-              <p>10.6% Interest Rate</p>
-              <p>Amount Start from 50000 to 100000</p>
-            </div>
-          </div>
-        </div>
-        <div className='items'>
-          <div className='title'>
-            INT - Interest
-          </div>
-          <div className='explaination'>
-            <div className='controller'>
-              <p>Each month should pay the Interest amount utill paying full Loan Amount</p>
-              <p>0.1% of due Amount is considered to be over due as penality</p>
-              <p>8% Interest Rate</p>
-              <p>Amount Start from 50000 to 200000</p>
-            </div>
-          </div>
-        </div>
-        <div className='items'>
-          <div className='title'>
-            EMG - Emergency
-          </div>
-          <div className='explaination'>
-            <div className='controller'>
-              <p>Should return money in 1 week</p>
-              <p>5% of due Amount is considered to be over due as penality</p>
-              <p>5.8% Interest Rate</p>
-              <p>Amount Start from 10000 to 40000</p>
-            </div>
-          </div>
-        </div>
-      </div>{/** loans */}
+      <div className='avails'>
 
-    {/* <div className='about'>
-        <div className='loc'>
-          <p>your trusted partner in financial empowerment</p>
-          <p>Established in 2016 by Balaji</p>
-          <p>Our company is located at 13/657, Kudi Theru, Vilvanur, Idaiyapatti P/O, PN Palayam T/K, Salem D/T</p>
+        <div className='max-w-5xl'>
+          <h1 className="text-gray-900 font-bold text-xl mb-2 " style={{fontFamily: 'Laila', fontSize: '30px'}}>Loans Available</h1>
         </div>
-        <div className='divs'>
-        <h1>Founder</h1>
-          <img src='/asserts/appa.jpg'/>
-          <p>Shanmugam, a seasoned professional with a deep understanding of the financial landscape, envisioned creating a platform that goes beyond traditional financial services. With a valid license and a passion for helping others achieve their financial goals, Balaji embarked on this journey to make a meaningful impact on the community.</p>
+
+        <div className=''>
+          <div>
+            
+          </div>
+
         </div>
-    </div> */}
-    {/** about */}
-  </div>{/** home container */}
-</div>
+      </div>
+
+      {/* Crousel */}
+      <div className='carosel'>
+          <h1 className='text-black text-center h-20' style={{fontFamily: 'Laila', fontSize: '30px', letterSpacing:'-1px'}}>Loans Available For</h1>
+          <div className='max-w-5xl'>
+            <Swiper
+              spaceBetween={10}
+              slidesPerView={5}
+              loop = {true}
+              centeredSlides = {true}
+              speed={1000}
+              autoplay={{ delay: 2000 }}
+              modules={[Autoplay]} 
+              onSlideChange={(cur) => setActive(cur.realIndex)}
+            >
+              {
+                obj.map((ob, i)=>{
+                  return <SwiperSlide className='swiper'>
+                    <div className={`card ${active === i && 'active2'}`}>
+                      <img src={`asserts/${ob.img}.jpg`} alt={`${ob.text}`}/>
+                      <h2 className='text'>{ob.text}</h2>
+                    </div>
+                  </SwiperSlide>;
+                })
+              }
+            </Swiper> 
+          </div>
+      </div>
+      <div className='avails'></div>
+    </div> {/* home container */}
+  </div> //end
+  
   );
 }
 

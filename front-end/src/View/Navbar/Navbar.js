@@ -25,28 +25,29 @@ function Navbar() {
   }
   
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.post('http://localhost:3001/msg/getCount', {
+          token: token
+        });
+        if(res.data.message==='got')
+        {
+          setCount(res.data.count)
+        }
+        await axios.post('http://localhost:3001/user/isAdmin', {
+          token: token
+        }).then((res)=>{
+          if(res.data.message)
+            setIsAdmin(true)
+        })
+      } catch (error) {
+        console.error('Error fetching Count data:', error);
+      } 
+    }
       fetchData();
-  }, []);
+  }, [token]);
 
-  async function fetchData() {
-    try {
-      const res = await axios.post('http://localhost:3001/msg/getCount', {
-        token: token
-      });
-      if(res.data.message==='got')
-      {
-        setCount(res.data.count)
-      }
-      await axios.post('http://localhost:3001/user/isAdmin', {
-        token: token
-      }).then((res)=>{
-        if(res.data.message)
-          setIsAdmin(true)
-      })
-    } catch (error) {
-      console.error('Error fetching Count data:', error);
-    } 
-  }
+  console.log(isAdmin)
 
 
   if(isLogout)
@@ -79,10 +80,10 @@ function Navbar() {
         <img src='/svg/profile.svg' alt='' />
         <h4>Profile</h4>
       </div>
-      {/* <div className='item' onClick={() => {navigate('/history'); setShowMenu(false); setIsLogOut(false)}}>
+      <div className='item' onClick={() => {navigate('/history'); setShowMenu(false); setIsLogOut(false)}}>
         <img src='/svg/activity.svg' alt='' />
         <h4>History</h4>
-      </div> */}
+      </div> 
       <div className='item' onClick={() => {navigate('/allNotification'); setShowMenu(false); setIsLogOut(false)}}>
         <img style={{width:'35px', paddingLeft:'15px'}} src='/svg/noti.svg'  alt='' />
         <h4 style={{position:'relative', left:'-8px'}}>Notification</h4>
@@ -124,7 +125,7 @@ function Navbar() {
               </div>
               <div className='logo'>
                 <img src='/svg/sbLogo.svg' alt=''/>
-                <h1>Sri Balaji</h1>
+                <div className='logo'>Sri Balaji</div>
               </div>
               <div className='afterLogo'>
                 {

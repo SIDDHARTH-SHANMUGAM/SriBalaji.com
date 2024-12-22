@@ -3,37 +3,29 @@
   left: 0px;
   top: 0px;
   width: 100%;
-  height: 530vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: #121212;
+  background: black;
   transform: scale(5px);
 }
 
-.cursor1{
-  position: fixed;
+.home-outer{
+  position: relative;
   top: 0px;
+  right: 0px;
   left: 0px;
-  width: 100px;
-  height: 100px;
-  background-color: white;
-  z-index: 100;
-  mix-blend-mode: difference;
-  border-radius: 50%;
-  pointer-events: none;
 }
 
 .active{
   background: #121212;
   background: -webkit-linear-gradient(to bottom, #121212, #f2fcfe); 
   background: linear-gradient(to bottom, #121212 0%,
-    #24201d 25%,
-    #373737 50%,
-    #4e4e4e 75%,
-    #838383 100%);
-
+    #545250 25%,
+    #a7a5a5 50%,
+    #d5d2d2 75%,
+    #d7d6d6 100%);
 }
 
 .welcome{
@@ -46,30 +38,32 @@
   justify-content: center;
   border-radius: 20px;
   letter-spacing: 5px;
-  button{
-    background-color: white;
-    color: black; 
-  }
   p{
+    position: relative;
+    top: 20px;
     font-size: 25px;
     color: skyblue;
   }
-  h1{
+  .head1{
     position: relative;
     font-size: 5em;
     cursor: pointer;
     letter-spacing: 8px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Rubik Glitch Pop;
     color: #9eb6c1;
     text-transform: uppercase;
     width: 100%;
     text-align: center;
     -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(0, 0, 0, 0.379));
     line-height: 0.70em;
-    animation: animate 50s linear infinite;
+    animation: bulbAnimation 50s linear infinite;
+  }
+  .button{
+    position: relative;
+    top: 20px;
   }
 }
-@keyframes animate {
+@keyframes bulbAnimation {
   0%,19%,26%,30%,40%,60%,68%,70%,95%,100%
   {
     color: #dff0f1;
@@ -88,167 +82,71 @@
   }
 }
 
-.avail{
+
+.avails{
   position: relative;
-  width: 90%;
+  width: 97%;
   margin: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
   height: 100vh;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: white;
-
-  .sl{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 40px;
-    font-weight: 400px;
-  }
+  background-color: rgba(255, 255, 255, 0.952);
 
   
-  .carosuelContainer {
-      height: 400px;
-      display: flex;
-      flex-direction: row;
-      justify-content: start;
-
-    .card {
-        width: 50px;
-        border-radius: .75rem;
-        background-size: cover;
-        cursor: pointer;
-        overflow: hidden;
-        border-radius: 5px;
-        margin: 0 10px;
-        display: flex;
-        align-items: flex-end;
-        transition: 2s cubic-bezier(.28,-0.03,0,.99);
-        box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
-
-      .description{
-        display: none;
-      }
-    }
-
-  .card2{
-    width: 520px;
-    margin: 0 10px;
-    display: flex;
-    justify-content:end;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 2px;
-    height: 100%;
-    transition-delay: 0s;
-    transition: all 3s ease;
-    .icon{
-      display: none;
-    }
-    .description{
-      font-family: cursive;
-      color: white;
-      font-size: 20px;
-      background-color: #8383835f;
-      border-radius: 10px;
-      padding: 10px;
-    }
-  }
-  .card, .card2{
-    box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
-    .icon{
-      background-color: white;
-      width: 25px;
-      height: 25px;
-      text-align: center;
-      border-radius: 50%;
-      font-size: 16px;
-      font-weight: 10px;
-    }
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-    
-    .card2[for="c1"], .card[for="c1"] {
-        background-image: url('../../../public/asserts/medical.jpg'); 
-    }
-    .card2[for="c2"], .card[for="c2"]  {
-        background-image: url('../../../public/asserts/education.jpg'); 
-    }
-    .card2[for="c3"], .card[for="c3"]  {
-        background-image: url('../../../public/asserts/startups.jpg'); 
-    }
-    .card2[for="c4"], .card[for="c4"]  {
-        background-image: url('../../../public/asserts/vehicle.jpg'); 
-    }
-    .card2[for="c5"], .card[for="c5"]  {
-        background-image: url('../../../public/asserts/wedding.jpg');
-    }
-    .card2[for="c6"], .card[for="c6"]  {
-        background-image: url('../../../public/asserts/home.jpg'); 
-    }
-    .card2[for="c7"], .card[for="c7"]  {
-        background-image: url('../../../public/asserts/vaccation.jpg');
-    }
-  }
 }
 
-
-.loans{
+.carosel{
   position: relative;
   width: 100%;
-  margin: 20px;
-  height: auto;
-  border-radius: 20px;
+  padding: 20px;
+  background-color: rgba(244, 225, 201, 0.937);
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
-  background-color: white;
-  
-
-  .items{
-    padding: 20px;
-    margin: 10px;
-    display: flex;
-    height: 60vh;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: #fee5ac0e;
-    border-radius: 20px;
-    .title{
-      width: 500px;
-      margin-top: 0;
-      font-family: PP Eiko;
-      font-weight: 400;
-      font-style: normal;
-      line-height: 1.125;
-      text-align: center;
-      font-size: 40px;
-      font-family: 'Courier New', Courier, monospace;
-      color: #4e4e4e;
-    }
-    .explaination{
-      display: flex;
-      flex-direction: column;
-      width: 600px;
-      font-size: 15px;
-      text-align: justify;
-      padding: 20px;
-      .controller{
-        width: 500px;
-        p{
-          padding: 5px;
-          font-weight: 100;
-          letter-spacing: 2px;
-          font-family: cursive;
-          color: black;
-
-        }
-      }
-    }
-  }
+  justify-content: center;
+  flex-direction: column;
 }
 
+
+.card{
+  @apply cursor-pointer border-b-4 rounded-md bg-gradient-to-t from-white/20 h-44 text-center
+  px-3 py-7 ;
+  top: 0px;
+  left: 0px;
+  width: 250px !important;
+  position: relative;
+  
+  img{
+    height: 200px;
+    width: auto;
+    object-fit: cover;
+  }
+  height: 100%;
+  .text{
+    display: none;
+  }  
+}
+
+.active2{
+  
+  width: 200px !important;
+  @apply bg-gradient-to-t from-white;
+
+  img{
+    height:200px ;
+    border-radius: 10px;
+  }
+  .text{
+    display: block;
+    position: relative;
+    top: 10px;
+    font-family: kalam;
+
+    @apply text-sky-600;
+  }
+
+}

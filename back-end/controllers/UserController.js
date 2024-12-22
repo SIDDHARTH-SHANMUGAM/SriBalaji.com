@@ -13,12 +13,14 @@ const login= async(req, res)=>{
         .then(isCorrect=>{
             if(!isCorrect) 
               res.json({message: "Password is Wrong"});
-
-            const token = jwt.sign({
-                userId: user.userId,
-                isAdmin: user.isAdmin,
-            }, process.env.JWT_SECRET,{expiresIn: "24h"});
-            res.json({message : "Exist" ,token: token });
+            else
+            {
+              const token = jwt.sign({
+                  userId: user.userId,
+                  isAdmin: user.isAdmin,
+              }, process.env.JWT_SECRET,{expiresIn: "24h"});
+              res.json({message : "Exist" ,token: token });
+            }
            })
     }
     else
@@ -91,7 +93,9 @@ const getUser = async(req, res) =>{
   try{
     const user = await User.findOne({userId});
     if(user){
-      res.json({message:'got', user: user})
+      const userObject = user.toObject();
+      delete userObject.password;
+      res.json({message:'got', user: userObject})
     }
     else
       res.json({message:'usernotfound'})
@@ -109,7 +113,9 @@ const getUserBy = async(req, res) =>{
     {
       const user = await User.findOne({userId: value});
       if(user){
-        res.json({message:'got', user: user})
+        const userObject = user.toObject();
+        delete userObject.password;
+        res.json({message:'got', user: userObject})
       }
       else
         res.json({message:'usernotfound'})
@@ -118,7 +124,9 @@ const getUserBy = async(req, res) =>{
     {
       const user = await User.findOne({mobile: value});
       if(user){
-        res.json({message:'got', user: user})
+        const userObject = user.toObject();
+        delete userObject.password;
+        res.json({message:'got', user: userObject})
       }
       else
         res.json({message:'usernotfound'})

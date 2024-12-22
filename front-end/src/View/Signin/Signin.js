@@ -114,12 +114,11 @@ function Signin() {
 
         
   return (
-    <div className='container'>
+    <div className='signinContainer'>
         <form onSubmit={handleSubmit} className='drop-left' >
-          <img src='/illustrations/signin.svg' className='drop-down' alt=''/>
           <div className='ipContainer drop-up'>
-          <div>
-            <h1>Sign In</h1>
+          <div className='sl'>
+            Sign In
           </div>
           <div className='ip'>
             <input
@@ -176,9 +175,8 @@ function Signin() {
                 <button type="submit">Sign In</button>
               </div>
             }
-            <div>
-              <p>Have an Account</p>
-              <button onClick={gotoLogin}>Login</button>
+            <div onClick={gotoLogin} className='sl2'>
+              Have an Account
             </div>
           </div>
         </form>

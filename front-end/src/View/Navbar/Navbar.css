@@ -1,20 +1,15 @@
 .navContainer{
-    position: relative;
+    position: fixed;
+    top:0px;
     width: 100%;
     z-index: 10;
     display: flex;
     background-color:  white;
     flex-direction: row;
-    height: 80px; 
+    height: 100px; 
     justify-content: space-between;
     align-items: center;
-    box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
-    
-    background-color: #53e3a6;
-    background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: linear-gradient(45deg, #50a3a2 0%, #53e3a6 100%);
+    box-shadow: 0px 2px 2px 2px rgba(202, 197, 197, 0.368);
 }
 .point:hover,
 .item:hover{
@@ -27,12 +22,14 @@
     img{
         width: 100px;
     }
-    h1{
+    .logo{
         position: relative;
         left: -19px;
         top: -5px;
+        font-family: Tenor Sans;
         font-size: 30px;
-        letter-spacing: 2px;
+        letter-spacing: -2px;
+        text-align: center;
     }
 }
 .log{
@@ -94,7 +91,7 @@
 
 .navItems{
     z-index: 10;
-    position: absolute;
+    position: fixed;
     top: 85px;
     width: 300px;
     height: 85vh;
@@ -102,11 +99,7 @@
     flex-direction: column;
     box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
     
-    background-color: #53e3a6;
-    background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: linear-gradient(45deg, #50a3a2 0%, #53e3a6 100%);
+    background-color: white;
 
     .item{
         display: flex;
@@ -121,8 +114,8 @@
     }
 }
 .menuMask{
-    position: absolute;
-    background-color: rgba(0, 255, 255, 0);
+    position: fixed;
+    background-color: rgba(117, 121, 121, 0.062);
     top: 0px;
     width: 100%;
     height: 100%;

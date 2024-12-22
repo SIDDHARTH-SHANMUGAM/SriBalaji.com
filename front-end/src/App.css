@@ -1,3 +1,4 @@
+
 :root {
   --primary: #6a59ff;
   --white: #ffffff;
@@ -27,33 +28,52 @@ html {
   background: #f9f9f9;
 }
 
-button{
-  color: white;
-  background-color: black;
+.button-container {
+  position: relative; 
+  width: auto;
+  height: 60px;
+  display: inline-block; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  position: relative;
+  color: black;
+  background-color: white;
   border-radius: 20px;
   font-size: 19px;
+  letter-spacing: normal;
   padding: 10px;
   width: 150px;
+  transition: all 0.3s ease-in-out; 
 }
+
 button:hover {
-  position: relative;
   font-size: 20px;
-  padding: 10px;
+  padding: 12px; 
   cursor: pointer;
+  color: white;
+  background-color: #65e7e0;
 }
+
 
 input{
   padding: 10px;
-  background-color: white;
-  border-radius: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
   color: black;
+  width: 200px;
   font-size: 18px;
   font-weight: bolder;
 }
+
 label,span{
   padding: 10px;
   font-size: 20px;
-  color: #f7f7f2;
+  color: black;
 }
 .ip{
   padding-top: 5px;
@@ -61,4 +81,10 @@ label,span{
 }
 .empty{
   height: 10px;
+}
+
+.app-container{
+  position: absolute;
+  right: 0px;
+  left: 0px;
 }

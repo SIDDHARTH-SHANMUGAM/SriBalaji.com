@@ -1,7 +1,7 @@
 const express = require("express");
-const {authAdmin} = require('../middleware/AuthUser');
+const {authAdmin, authUser} = require('../middleware/AuthUser');
 const loanRouter = express.Router();
-const {addLoan, getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan} = require('../controllers/MonthlyLoanController')
+const {addLoan, getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan, getHistory} = require('../controllers/MonthlyLoanController')
 
 
 // get
@@ -13,6 +13,7 @@ loanRouter.route('/addLoan').post(authAdmin, addLoan);
 loanRouter.route('/getAllLoans').post(authAdmin, getAllLoans);
 loanRouter.route('/getLoan').post(authAdmin, getLoan);
 loanRouter.route('/payLoan').post(authAdmin, payLoan);
+loanRouter.route('/getHistory').post(authUser, getHistory);
 
 // put
 

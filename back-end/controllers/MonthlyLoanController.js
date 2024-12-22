@@ -180,6 +180,38 @@ const payLoan = async (req, res) => {
     }
 }
 
+
+const getHistory = async (req, res) =>{
+  try {
+    const userId = req.userId;
+    const loans = await MonthlyLoan.find({
+      $or: [
+        { userId: userId },
+        { guarantorId: userId }
+      ]
+    });
+
+    const dLoans = loans.map(loan => {
+      let role;
+      if (loan.userId == userId) {
+        role = "Borrower";
+      } else if (loan.guarantorId == userId) {
+        role = "Guarantor";
+      }
+      loan = loan.toObject(); 
+      loan.role = role; 
+      return loan;
+    });
+    res.json({message: 'got', loans: dLoans});
+  } catch (error) {
+    res.json({ message: "error" , error: error});
+  }
+}
+
+const getOverDues = async (req, res) =>{
+
+}
+
 var cron = require('node-cron');
 cron.schedule('00 10 01 * *', async () => {
   console.log('here in schedule');
@@ -312,4 +344,4 @@ cron.schedule('00 10 01 * *', async () => {
 });
 
 
-module.exports = {addLoan , getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan};
+module.exports = {addLoan , getAllLoans, getLoan, getThisWeekLoan, getTodayLoan, payLoan, getHistory, getOverDues};
