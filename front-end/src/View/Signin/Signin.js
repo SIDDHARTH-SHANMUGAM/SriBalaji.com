@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import './Signin.css'
 
 function Signin() {
   const [firstName, setFirstName] = useState('');
@@ -25,25 +24,8 @@ function Signin() {
         }
         else if(res.data.message==="signedIn")
         {
-          // const token = res.data.token
-          // sessionStorage.setItem('token', JSON.stringify(res.data.token))
-          // const message = 'Welcome to Sri Balaji Finance! please visit our "About Page" to clarify loans '
-          // const isSeen = false;
-          // try{
-          //   await axios.post("http://localhost:3001/msg/addMessage",{
-          //     userId, message, isSeen
-          //   })
-          //   .then(re =>{
-          //     console.log(re);
-          //   })
-          //   .catch(er=>{
-          //     console.log(er);
-          //   })
-          // }
-          // catch(e)
-          // {
-          //   console.log(e);
-          // }
+          sessionStorage.setItem('token', JSON.stringify(res.data.token))
+          
 
           navigate('/');
         }
@@ -108,86 +90,77 @@ function Signin() {
         setError("")
     }
   }
-  const gotoLogin =()=>{
-    navigate('/login');
-  }
-
         
   return (
-    <div className='signinContainer'>
         <form onSubmit={handleSubmit} className='drop-left' >
-          <div className='ipContainer drop-up'>
-          <div className='sl'>
-            Sign In
+          <div className='title'>
+            Enter Your Credentials to Get Signin
           </div>
-          <div className='ip'>
+          <div className='input-box'>
             <input
               type="text"
               value={firstName}
               onChange={(e) => { setFirstName(e.target.value); check(e.target.value, "Name")}}
+              required
             />
             <span>First Name</span>
           </div>
-         <div className='ip'>
+         <div className='input-box'>
             <input
               type="text"
               value={lastName}
               onChange={(e) => {setLastName(e.target.value); check(e.target.value, "Name")}}
+              required
             />
             <span>Last Name</span>
           </div>
-          <div className='ip drop-in'>
+          <div className='input-box drop-in'>
             <input
               type="text"
               value={mobile}
               onChange={(e) => {setMobile(e.target.value); check(e.target.value, "Mobile")}}
+              required
             />
             <span>Mobile</span>
           </div>
-          <div className='ip drop-in'>
+          <div className='input-box drop-in'>
             <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              required
             />
             <span>Address</span>
           </div>
-          <div className='ip drop-in'>
+          <div className='input-box drop-in'>
             <input
               type="password"
               value={password}
               onChange={(e) => {setPassword(e.target.value);  check(e.target.value, "Password")}}
+              required
             />
             <span>Password</span>
           </div>
-          <div className='ip drop-in'>
+          <div className='input-box drop-in'>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => {setConfirmPassword(e.target.value);  check(e.target.value, "ConfirmPassword")}}
+              required
             />
             <span>Confirm Password</span>
           </div>
-            {
-            error===""&&password&&firstName&&lastName&&mobile&&address&&confirmPassword
-              &&
-              <div>
-                <button type="submit">Sign In</button>
-              </div>
-            }
-            <div onClick={gotoLogin} className='sl2'>
-              Have an Account
-            </div>
+          <div className='button-container'>
+            <button type="submit">Sign In</button>
           </div>
-        </form>
         {
           error&&
-          <div className='errorBox drop-in'>
+          <div className='error-container drop-right'>
             <img src='/illustrations/char.svg' alt=''/>
-            <p>{error}</p>
+            {error}
           </div>
         }
-    </div>
+        </form>
   );
 }
 

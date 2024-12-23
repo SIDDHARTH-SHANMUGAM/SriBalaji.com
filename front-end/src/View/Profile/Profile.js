@@ -190,7 +190,6 @@ function Profile() {
 
   return (
       <ProfileContaier>
-      <Navbar/>
         <div className='content'>
           {boxinEdit}
           {box}

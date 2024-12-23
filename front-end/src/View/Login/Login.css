@@ -1,100 +1,58 @@
-.loginContainer{
-  position: relative;
+.login-container{
+  position: absolute;
   top: 0px;
   left: 0px;
-  display: flex;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  
-  /* -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover; */
-  background-size: cover;
-  /* background-image: radial-gradient(circle, #0000 45%, #000f 48%), radial-gradient(, #fc1c14 20%, #cf15cf 80%); */
-  
-  /* background: #555; */
-  /* background: linear-gradient(to bottom, black ,rgb(48, 48, 48),rgb(95, 94, 94), white); */
-  /* background-image: url('../../../public/asserts/bgLogin.webp');  */
-  
 }
 
-form{
+.login-container form{
   display: flex;
-  flex-direction: row;
-  width: 100vh;
+  flex-direction: column;
+  width: 90vh;
   background-size: cover;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  gap: 20px;
+  z-index: 5;
+  height: 600px;
   border-radius: 10px;
+  background-color:#1d2b3a ;
   box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.626);
-  
-  animation: boxAnimation 50s linear infinite;
 
-}
+  .title{
+    font-size: 1.5em;
+    font-weight: bolder;
+    color: #65e7e0;
+    padding: 40px;
 
-@keyframes boxAnimation {
-  0%,19%,26%,30%,40%,60%,68%,70%,95%,100%
-  {
-    border: #dff0f1;
-    box-shadow: 0 0 10px #03bcf4;
-  }
-  9.9%,25.1%,45.1%,55.9%,65.1%,89.9%,100%
-  {
-    color: #fff;
-    box-shadow: 0 0 10px #03bcf4,
-    0 0 20px #03bcf4,
-    0 0 30px #03bcf4,
-    0 0 80px #03bcf4,
-    0 0 160px #03bcf4
-    ;
   }
 }
 
 
-.ipContainer{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .ip{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content:flex-start;
-    align-items: flex-start;
-  }
-  .submit{
-    margin: 20px;
-  }
-}
-.ipContainer .sl{
-  color: black;
-  font-size: 40px;
-  font-weight: 600;
-  display: flex;
-  font-family: 'Courier New', Courier, monospace;
-}
-.ipContainer .sl2{
-  margin-top: 20px;
-  font-family: 'Courier New', Courier, monospace;
-  color: black;
-  font-weight: 700;
-}
-.ipContainer .sl2:hover{
-  color: #6197f8;
-  cursor: pointer;
-}
 .gotobrother{
   display: flex;
-  color: black;
+  color: white;
   flex-direction: column;
   justify-content: center;
+  width: 40%;
+  z-index: 5;
+
+
 }
 
+.gotobrother:hover{
+  cursor: pointer;
+  color: #65e7e0;
+}
+
+
+
+/* Error Box */
 @media only screen and (max-width: 600px) {
   
   form{
@@ -103,12 +61,12 @@ form{
     height: 120%;
 
   }
-  .errorBox{
+  .error-container{
     width: 50%;
     background-color: rgba(242, 214, 76, 0.916);
     box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
   }
-  .errorBox img{
+  .error-container img{
     width: 20%;
   }
 }
@@ -116,90 +74,35 @@ form{
   form{
     justify-content: space-around;
   }
-  .errorBox{
+  .error-container{
     max-width: 350px;
     padding: 40px;
     background-color: rgba(193, 171, 130, 0.9);
     box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
   }
-  .errorBox img{
+  .error-container img{
     width: 20%;
     border-radius: 10%;
   }
 
 }
-.errorBox{
-  color: white;
-  font-size: larger;
-  bottom: 5px;
-  height: 30px;
-  width: 50%;
+
+.error-container{
   position: absolute;
-  left: 500px;
+  background-color: white;
+  color: rgba(255, 128, 0, 0.833);
+  bottom: 5px;
+  width: 50%;
+  height: 80px;
+  padding: 40px;
+  left: 100px;
+  top: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  z-index: 10;
   p{
     padding: 5px;
   }
-}
-
-
-.drop-left {
- animation: drop-left 1s ease 300ms backwards;
-}
-.drop-down {
- animation: drop-down 0.6s ease 200ms backwards;
-}
-.drop-down2 {
- animation: drop-down 1.5s ease 300ms backwards;
-}
-.drop-up {
- animation: drop-up 1s ease 200ms backwards;
-}
-.drop-right {
- animation: drop-right 0.3s ease-in 200ms backwards;
- 
-}
-
-@keyframes drop-left {
- from {
-  opacity: 0;
-  transform: translateX(600px);
- }
- to {
-  opacity: 1;
-  transform: translate(0px);
- }
-}
-@keyframes drop-down {
- from {
-  opacity: 0;
-  transform: translateY(-100px);
- }
- to {
-  opacity: 1;
-  transform: translate(0px);
- }
-}
-@keyframes drop-up {
- from {
-  opacity: 0;
-  transform: translateY(100px);
- }
- to {
-  opacity: 1;
-  transform: translate(0px);
- }
-}
-@keyframes drop-right {
- from {
-  opacity: 0;
-  transform: translateX(-50px);
- }
- to {
-  opacity: 1;
-  transform: translate(0px);
- }
 }

@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
 import { Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
+import Login from '../Login/Login';
+import Signin from '../Signin/Signin';
 
 function Home() {
   
   const token = JSON.parse(sessionStorage.getItem('token'));
-  const navigate = useNavigate();
   const gotoLogin = ()=>{
-    navigate('/login');
+    setLoginSwitch(true);
+    setSigninSwitch(false);
+  }
+  const gotoSignin = ()=>{
+    setSigninSwitch(true);
+    setLoginSwitch(false);
   }
  
 
   const [onScrollBoolean, setScrollBoolean] = useState(false);
+  
   const changeBackground = ()=>{
-    if(window.scrollY<80)
-      setScrollBoolean(false);
-    else
+    if(window.scrollY>400)
       setScrollBoolean(true);
+    else
+    {
+      if(token)
+      {
+        setScrollBoolean(true);
+      }
+      else
+        setScrollBoolean(false);
+    }
   }
   window.addEventListener('scroll', changeBackground);
 
@@ -35,6 +47,9 @@ function Home() {
   ];
 
   const [active , setActive ] = useState();
+  const [loginSwitch, setLoginSwitch] = useState();
+  const [signinSwitch, setSigninSwitch] = useState();
+
 
   useEffect(() => {
     const elements = document.querySelectorAll('.avails');
@@ -54,21 +69,38 @@ function Home() {
     return () => observer.disconnect();
   }, []);
 
+
   return (
   <div className='home-outer'>
-    <Navbar/>
     <div className={onScrollBoolean? 'homeContainer active':'homeContainer'}>
     {!token&&
-      <div className='welcome drop-down'>
-        <div className='head1 drop-up'> Sri Balaji Finance</div>
-        <p className='drop-right sl'>We are here for Your Emergency. Grow with us</p>
-        <div className='button-container'>
-          <button className='button' onClick={gotoLogin}>Get Started </button>
+        <div className='welcome drop-down'>
+          <div className='head1 drop-up'> Sri Balaji Finance</div>
+          <p className='drop-right greet'>We are here for Your Emergency. Grow with us</p>
+          <div className='button-container'>
+            <button className='button' onClick={gotoLogin}>Get Started </button>
+          </div>
+          {loginSwitch&&!signinSwitch&&
+            <div className='login-container' >
+              {loginSwitch&&<div className='mask' onClick={()=>{setLoginSwitch(false)}}></div>}
+              <Login/>
+              <div className='gotobrother drop-down' onClick={gotoSignin}>
+                Need an Account
+              </div>
+            </div>
+          }
+          {!loginSwitch&&signinSwitch&&
+            <div className='login-container mask'>
+              {signinSwitch&&<div className='mask' onClick={()=>{setSigninSwitch(false)}}></div>}
+              <Signin/>
+              <div className='gotobrother drop-down' onClick={gotoLogin}>
+                Already have one
+              </div>
+            </div>
+          }
         </div>
-      </div>
     }
       <div className='avails'>
-
         <div className='max-w-5xl'>
           <h1 className="text-gray-900 font-bold text-xl mb-2 " style={{fontFamily: 'Laila', fontSize: '30px'}}>Loans Available</h1>
         </div>
@@ -109,7 +141,7 @@ function Home() {
           </div>
       </div>
       <div className='avails'></div>
-    </div> {/* home container */}
+    </div>
   </div> //end
   
   );

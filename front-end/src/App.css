@@ -28,6 +28,12 @@ html {
   background: #f9f9f9;
 }
 
+.empty{
+  height: 10px;
+}
+
+
+/* Button */
 .button-container {
   position: relative; 
   width: auto;
@@ -38,7 +44,7 @@ html {
   justify-content: center;
 }
 
-.button {
+.button-container button {
   position: relative;
   color: black;
   background-color: white;
@@ -50,7 +56,7 @@ html {
   transition: all 0.3s ease-in-out; 
 }
 
-button:hover {
+.button-container button:hover {
   font-size: 20px;
   padding: 12px; 
   cursor: pointer;
@@ -59,32 +65,130 @@ button:hover {
 }
 
 
-input{
-  padding: 10px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  color: black;
-  width: 200px;
-  font-size: 18px;
-  font-weight: bolder;
-}
-
-label,span{
-  padding: 10px;
-  font-size: 20px;
-  color: black;
-}
-.ip{
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.empty{
-  height: 10px;
-}
 
 .app-container{
   position: absolute;
   right: 0px;
   left: 0px;
+}
+
+
+/* Inputs */
+/* Should use bac */
+.input-box{
+  position: relative;
+  width: 250px;
+}
+
+.input-box input,
+.input-box select{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: #1d2b3a;
+  border-radius: 5px;
+  outline: none;
+  color: #fff;
+  font-size: 0.9em;
+
+}
+.input-box span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  border: none;
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.input-box input:focus ~ span,
+.input-box input:valid ~ span,
+.input-box:focus-within span,
+.input-box select:valid ~ span 
+{
+  color: #00dfc4;
+  transform: translateX(10px) translateY(-12px);
+  font-size: 0.7em;
+  padding: 0 10px;
+  background-color: #1d2b3a;
+  border-left: 0.25px solid #00dfc4;
+  border-right: 0.25px solid #00dfc4;
+}
+
+/* Animations */
+.drop-left {
+ animation: drop-left 1s ease 300ms backwards;
+}
+.drop-down {
+ animation: drop-down 0.6s ease 200ms backwards;
+}
+.drop-down2 {
+ animation: drop-down 1.5s ease 300ms backwards;
+}
+.drop-up {
+ animation: drop-up 1s ease 200ms backwards;
+}
+.drop-right {
+ animation: drop-right 0.3s ease-in 200ms backwards;
+ 
+}
+
+@keyframes drop-left {
+ from {
+  opacity: 0;
+  transform: translateX(600px);
+ }
+ to {
+  opacity: 1;
+  transform: translate(0px);
+ }
+}
+@keyframes drop-down {
+ from {
+  opacity: 0;
+  transform: translateY(-100px);
+ }
+ to {
+  opacity: 1;
+  transform: translate(0px);
+ }
+}
+@keyframes drop-up {
+ from {
+  opacity: 0;
+  transform: translateY(100px);
+ }
+ to {
+  opacity: 1;
+  transform: translate(0px);
+ }
+}
+@keyframes drop-right {
+ from {
+  opacity: 0;
+  transform: translateX(-50px);
+ }
+ to {
+  opacity: 1;
+  transform: translate(0px);
+ }
+}
+
+
+/* Mask */
+
+.mask{
+  background-color: black;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }

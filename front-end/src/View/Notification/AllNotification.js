@@ -37,7 +37,6 @@ function AllNotification() {
   // }
   return (
     <div className='messageContainer'>
-      <Navbar/>
       <div className='flex'>
         {
           message&&message.map((msg) => (

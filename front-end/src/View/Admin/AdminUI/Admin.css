@@ -1,0 +1,52 @@
+.admin-container {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    background-color: beige;
+    padding-bottom: 200px;
+}
+
+.admin-menu {
+    position: relative;
+    background-color: gray;
+    top: 0px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+  }
+  
+  @media only screen and (max-width: 550px) {
+    .admin-menu {
+      top: 140px;
+    }
+  }
+  
+  .cards {
+    height: 50px;
+    width: 87%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cards:hover {
+    cursor: pointer;
+  }
+  
+  .act {
+    background-color:bisque;    
+    border-radius: 5px;
+    box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
+  }
+  
+  .displayer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 0px;
+    left: 0px;
+  }
+  

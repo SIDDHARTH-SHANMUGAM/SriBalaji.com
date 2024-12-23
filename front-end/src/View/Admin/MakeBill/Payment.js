@@ -138,14 +138,14 @@ function Payment({billNo}) {
                     <option value="int">INT</option>
                 </select>
             </div>
-            <div>
-                <label>Laon No</label>
+            <div className='input-box'>
                 <input
                     type="text"
                     value={payLoanNo}
                     onChange={handleLoanNo}
                     required
-                />
+                    />
+                <span>Enter Loan No</span>
             </div>
             <div className='profileContainer'>
                     {userId&&<>
@@ -153,7 +153,7 @@ function Payment({billNo}) {
                         <div className='imgContainer'>
                             {user.imageUrl&&<img src={user.imageUrl} alt='sorry' />}
                         </div>
-                        <div>
+                        <div className='input-box'>
                             <input
                                 type="text"
                                 value={userId}

@@ -10,21 +10,8 @@ back end
     -> add lines inside scripts in package.json("start": "nodemon server.js")
 
 
-  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: linear-gradient(top bottom right left, #50a3a2 0%, #53e3a6 100%);
-
-
-illustrations
-  undraw
-  ira design
-  storyset
-  openpeeps
-  humaans
-
 svgs
-  flaticons
+  https://react-icons.github.io/react-icons/
 
 videos
   https://pixabay.com/
@@ -45,8 +32,6 @@ reference
 gradients
   https://uigradients.com/#BrokenHearts
 
-
-
   { 
   "billNo":20, 
   "loanType":"Monthly", 
@@ -56,7 +41,6 @@ gradients
   "paidAmount":2000, 
   "paidDues":"12"
 }
-
 
 <table>
           <thead>
@@ -94,3 +78,11 @@ gradients
           </tr>
           </tbody>
         </table>
+
+
+
+---- Indexes 
+  mask - 2
+  notify-content - 5
+  errorBox - 10
+  others - 0

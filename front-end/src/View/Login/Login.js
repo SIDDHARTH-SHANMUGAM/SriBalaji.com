@@ -34,7 +34,6 @@ function Login() {
       })
     }
     catch(e){
-      console.log(e);
     }
   };
 
@@ -56,52 +55,41 @@ function Login() {
       setError("");
     }
   }
-
-  const gottoSignin = ()=>{
-    navigate('/signin');
-  }
     
   return (
-    <div className='loginContainer'>
-        <form onSubmit={handleLogin} className='drop-left' >
-          <div className='ipContainer drop-up'>
-            <div className='sl'>
-              LogIn
+      <form onSubmit={handleLogin} className='drop-left' >
+            <div className='title'>
+              Enter Login Credentials
             </div>
-            <div className='ip'>
+            <div className='input-box'>
               <input
                 type="text"
                 value={mobile}
                 onChange={(e) => {setMobile(e.target.value); check(e.target.value)}}
+                required
               />
               <span>Mobile</span>
             </div>
-            <div className='ip'>
+            <div className='input-box'>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => {setPassword(e.target.value); setError('')}}
+                required
               />
               <span>Password</span>
             </div>
-            <div className='submit'>
+            <div className='button-container'>
               <button className={'buttonNotActive'} type="submit">Log In</button>
             </div>
-            <div className='gotobrother'>
-              <div onClick={gottoSignin} className='sl2'>
-                Need an Account?
+            {
+              error&&
+              <div className='error-container drop-right'>
+                <img src='/illustrations/char.svg' alt=''/>
+                {error}
               </div>
-            </div>
-          </div>
+            }
       </form>
-      {
-        error&&
-        <div className='errorBox drop-in'>
-          <img src='/illustrations/char.svg' alt=''/>
-          <p>{error}</p>
-        </div>
-      }
-    </div>
   );
 }
 

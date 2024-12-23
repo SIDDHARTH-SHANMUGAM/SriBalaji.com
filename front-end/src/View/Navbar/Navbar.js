@@ -2,38 +2,40 @@ import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css'
 import axios from 'axios';
+import Admin from '../Admin/AdminUI/Admin';
+import Profile from '../Profile/Profile';
+import AllNotification from '../Notification/AllNotification';
+import { AiOutlineHome } from "react-icons/ai";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { BsPerson } from "react-icons/bs";
+import { IoLogOutOutline } from "react-icons/io5";
+import { IoAlertOutline } from "react-icons/io5";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import Home from '../Home/Home';
+
+
 
 function Navbar() {
 
     const navigate = useNavigate();
-    const [showMenu, setShowMenu] = useState(false)
-    const [isLogout, setIsLogOut] =useState(false)
+    const isLogout =true;
     const token = JSON.parse(sessionStorage.getItem('token'));
-    const [count, setCount] = useState(0);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [active, setActive] = useState(0);
 
-  let menuicon
-  let menu
+
   let menumask
-  let menumask2
   let logoutModel
-  let adminList
 
   const handleLogout = ()=>{
     sessionStorage.removeItem('token');
+    setActive(0);
     navigate('/');
   }
   
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.post('http://localhost:3001/msg/getCount', {
-          token: token
-        });
-        if(res.data.message==='got')
-        {
-          setCount(res.data.count)
-        }
         await axios.post('http://localhost:3001/user/isAdmin', {
           token: token
         }).then((res)=>{
@@ -47,7 +49,6 @@ function Navbar() {
       fetchData();
   }, [token]);
 
-  console.log(isAdmin)
 
 
   if(isLogout)
@@ -55,93 +56,59 @@ function Navbar() {
     logoutModel =<div className='logout'>
       <div className='logoutContainer drop-down'>
         <div className='message'>
-          <img className='point' src='/illustrations/Warning.svg' alt='' />
+          <IoAlertOutline size='100px'/>
           <h2>Are you sure to Logout</h2>
         </div>
+        <div className='button-container'>
           <button onClick={handleLogout}>Confirm</button>
-          <div></div>
-          <button onClick={()=> setIsLogOut(false)}>Cancel</button>
+          <button onClick={()=> setActive(0)}>Cancel</button>
         </div>
       </div>
-    menumask2= <div className='menuMask' onClick={()=> setIsLogOut(false)}></div>
-  }
-
-
-  if(token&&showMenu)
-  {
-    menuicon = <img className='point' src='/svg/cross.svg' alt='' onClick={()=> {setShowMenu(false); setIsLogOut(false);}} />
-    menu = 
-    <div className='navItems drop-right'>
-      <div className='item' onClick={() => {navigate('/'); setShowMenu(false); setIsLogOut(false)}}>
-        <img src='/svg/home.svg' alt='' />
-        <h4>Home</h4>
-      </div>
-      <div className='item' onClick={() => {navigate('/profile'); setShowMenu(false); setIsLogOut(false)}}>
-        <img src='/svg/profile.svg' alt='' />
-        <h4>Profile</h4>
-      </div>
-      <div className='item' onClick={() => {navigate('/history'); setShowMenu(false); setIsLogOut(false)}}>
-        <img src='/svg/activity.svg' alt='' />
-        <h4>History</h4>
-      </div> 
-      <div className='item' onClick={() => {navigate('/allNotification'); setShowMenu(false); setIsLogOut(false)}}>
-        <img style={{width:'35px', paddingLeft:'15px'}} src='/svg/noti.svg'  alt='' />
-        <h4 style={{position:'relative', left:'-8px'}}>Notification</h4>
-      </div>
-      {/* <div className='item'>
-        <img src='/svg/setting.svg' alt='' />
-        <h4>Setting</h4>
-      </div> */}
-      {
-        isAdmin&&
-          <div className='item' onClick={() => {navigate('/admin'); setShowMenu(false); setIsLogOut(false)}}>
-            <img src='/svg/admin.svg' alt='' />
-            <h4>Admin</h4>
-          </div>
-       }
-       <div className='item' onClick={()=> setIsLogOut(true)}>
-        <img src='/svg/logout.svg'alt='' />
-        <h4>Logout</h4>
-       </div>
-      {adminList}
     </div>
-    menumask= <div className='menuMask' onClick={()=> setShowMenu(!showMenu)}></div>
+    menumask= <div className='menuMask' onClick={()=> setActive(0)}></div>
   }
-  else
-  {
-    menuicon = <img className='point' src='/svg/menubar.svg' alt='' onClick={()=> setShowMenu(!showMenu)} />
-  }
-  const gotoNoti= async()=>{
-    navigate('/notification');
-  }
+
+  const Menus = [
+    { name: "Home", icon: <AiOutlineHome size="40px" /> },
+    { name: "Admin", icon: <MdOutlineAdminPanelSettings size="40px" /> },
+    { name: "Profile", icon: <BsPerson size="40px"/> },
+    { name: "Message", icon: <IoMdNotificationsOutline size="40px"/> },
+    { name: "Logout", icon: <IoLogOutOutline size="40px"/> },
+  ];
 
   return (
     <div>
-
       {token&&<div>
-        <div className=' navContainer drop-down'>
+        <div className={'navContainer drop-down from-red-600'}>
               <div className='beforeLogo'>
-                {menuicon}
               </div>
               <div className='logo'>
-                <img src='/svg/sbLogo.svg' alt=''/>
-                <div className='logo'>Sri Balaji</div>
+                <div className='title'>Sri Balaji</div>
               </div>
               <div className='afterLogo'>
-                {
-                  token&&
-                  <div onClick={gotoNoti}>
-                    <img className='point' src='/svg/noti.svg' alt=''/>
-                    {count!==0&&<p className='count'>{count}</p>}
-                  </div>
-                }
-              </div>
+                {Menus.map((menu, i) => (
+                  ((i===1 &&isAdmin)||i!==1)&&
+                  <div key={i} 
+                    className={`item duration-500 ${
+                      i === active && "nav-active"
+                    }`}
+                    onClick={() => setActive(i)}
+                  >
+                        {menu.icon}
+                        <p>
+                        {menu.name}
+                        </p>
+                    </div>
+                ))}
+            </div>
         </div>
-        {logoutModel}
-        {menu}
-        {menumask}
-        {menumask2}
       </div>}
+      {active === 0 && <Home />}
+      {active === 1 && <Admin />}
+      {active === 2 && <Profile />}
+      {active === 3 && <AllNotification />}
+      {active === 4 && logoutModel}
+      {active === 4 && menumask}
     </div>
   )
 }
