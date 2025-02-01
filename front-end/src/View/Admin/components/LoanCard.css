@@ -1,0 +1,95 @@
+.loan-card-container {
+    position: relative;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .values{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    cursor: pointer;
+  }
+
+  .values .cell{
+    width: 200px;
+  }
+  
+  
+  .single-loan-container {
+    position: absolute;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    z-index: 6;
+    border-radius: 10px;
+    border:solid 1px rgba(255, 255, 255, 0.25) ;
+    width: 50%;
+    background-color: #1d2b3a;
+  }
+  
+  .due-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-bottom:solid 1px rgba(255, 255, 255, 0.25) ;
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
+    gap: 10px;
+  }
+  .loanNav{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    font-size: 1em;
+    gap: 10px;
+    border-bottom:solid 1px rgba(255, 255, 255, 0.25) ;
+    padding: 10px;
+    color: #65e7e0;
+    justify-content: center;
+    align-items: center;
+
+}
+  
+  .due-container .cell,
+  .loanNav .cell{
+    padding: 5px;
+    width: 200px;
+  }
+  
+  .paid {
+    color: green;
+  }
+  
+  .not-paid {
+    color: yellow;
+  }
+  
+  .over-due {
+    color: red;
+  }
+  
+  .over-due  button,
+  .not-paid button{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 0px 5px 2px rgba(245, 243, 243, 0.368);
+    
+  }
+  .menu-mask {
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+  }
+  

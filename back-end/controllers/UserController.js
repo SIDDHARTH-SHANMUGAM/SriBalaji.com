@@ -171,7 +171,10 @@ const isAdmin = async (req, res)=>{
   try{
     const user = await User.findOne({userId});
     if(user){
-      res.json({message: user.isAdmin})
+      if(user.isAdmin)
+        res.json({message: 'Admin'})
+      else
+        res.json({message: 'not an Admin'})
     }
     else
       res.json({message:'usernotfound'})

@@ -1,0 +1,22 @@
+.loans-container{
+    width: 98%;
+    padding: 20px;
+    top: 20px;
+    position: relative;
+    background-color: #1d2b3a;
+    color: white ;
+    font-size: 0.8em;
+    border-radius: 5px;
+    .cell{
+        width: 200px;
+    }
+    
+}
+
+.loans-container .titles{
+    display: flex;
+    color: #65e7e0;
+    font-size: 1.25em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding-bottom: 20px;
+}

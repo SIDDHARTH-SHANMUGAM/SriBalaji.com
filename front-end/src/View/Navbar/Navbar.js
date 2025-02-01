@@ -39,7 +39,7 @@ function Navbar() {
         await axios.post('http://localhost:3001/user/isAdmin', {
           token: token
         }).then((res)=>{
-          if(res.data.message)
+          if(res.data.message==='Admin')
             setIsAdmin(true)
         })
       } catch (error) {
@@ -67,7 +67,6 @@ function Navbar() {
     </div>
     menumask= <div className='menuMask' onClick={()=> setActive(0)}></div>
   }
-
   const Menus = [
     { name: "Home", icon: <AiOutlineHome size="40px" /> },
     { name: "Admin", icon: <MdOutlineAdminPanelSettings size="40px" /> },

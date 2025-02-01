@@ -17,6 +17,7 @@
         padding: 50px;
         font-size: 1em;
         color: white;
+        border-radius: 10px;
 
         label{
             padding-left: 20px;
@@ -95,38 +96,16 @@
     width: 100px;
   }
 }
-.billCardContainer{
-    position: relative;
-    height: 30px;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid black;
-    justify-content: center;
-    padding: 10px;
-}
 
-.billCC{
-    box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
-    position: relative;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-
-}
-.errorBox{
-    position: absolute;
-    right: 100px;
-    top: 100px;
-    background-color: rgba(0, 0, 0, 0.694);
-    padding: 20px;
-    border-radius: 20px;
-}
 
 .loanNav{
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    font-size: 1em;
+    gap: 10px;
+    color: #65e7e0;
+    justify-content: center;
     align-items: center;
 }
 .loanCont{

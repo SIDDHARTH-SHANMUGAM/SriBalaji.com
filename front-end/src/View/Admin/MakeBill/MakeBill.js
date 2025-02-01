@@ -60,12 +60,12 @@ function MakeBill() {
             <form >
                 <div className='upperDiv'>
                     <div className='input-box'>
-                        <input type='text' value={date} required />
+                        <input type='text' value={date} onChange={()=>{}} required/>
                         <span>Today</span>
                     </div>
                     <div className='input-box'>
                         
-                        <input type='text' value={billNo} required />
+                        <input type='text' onChange={()=>{}} value={billNo} required/>
                         <span>Bill</span>
                     </div>
                     <div className='input-box'>

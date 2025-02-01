@@ -9,7 +9,8 @@ const getCounter = async(req, res) =>{
   }
   catch(e)
   {
-    console.log(e);
+    console.log("counterController getCounter error: "+e);
+    res.json({error: e});
   }
 }
 

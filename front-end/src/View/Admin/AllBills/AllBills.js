@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import Bill from '../Bill/Bill';
 
 function AllBills() {
 
@@ -21,18 +20,18 @@ function AllBills() {
       })
     }
     fetchData();
-  },[])
+  },[token])
   return (
-    <div className='thisWeekContainer'>
+    <div className='loans-container'>
       <div className='titles'>
-            <h2>Date</h2>
-            <h2>Bill NO</h2>
-            <h2>Loan Type</h2>
-            <h2>Loan No</h2>
-            <h2>Name</h2>
-            <h2>Transaction Type</h2>
-            <h2>Pay/Rec Amt</h2>
-            <h2>Dues</h2>
+            <div className='cell'>Date</div>
+            <div className='cell'>Bill NO</div>
+            <div className='cell'>Loan Type</div>
+            <div className='cell'>Loan No</div>
+            <div className='cell'>Name</div>
+            <div className='cell'>Transaction Type</div>
+            <div className='cell'>Pay/Rec Amt</div>
+            <div className='cell'>Dues</div>
         </div>
       {
         bills && bills.map((bill) => (
@@ -48,7 +47,6 @@ function AllBills() {
   const token = JSON.parse(sessionStorage.getItem('token'));
   const [user, setUser] = useState('');
   const [date, setDate] = useState('');
-  const [view, setView] = useState(false);
 
   const formatDate = (date) => {
     const day = date.substring(8, 10);
@@ -79,29 +77,22 @@ function AllBills() {
       setDate(formattedDate);
     }
     fetchData();
-  }, [bill.date]);
-
-  const handleView = () => {
-    setView(!view);
-  };
-
-  const content = view ? <Bill bill={bill} user={user} /> : null;
+  }, [bill, token]);
 
   return (
-    <div className='billCardContainer' onClick={handleView}>
+    <div className='loan-card-container' >
       {bill && user && (
         <div className='values'>
-          <p>{date && date}</p>
-          <p>{bill.billNo}</p>
-          <p>{bill.loanType}</p>
-          <p>{bill.loanNo}</p>
-          <p>{user.firstName + ' ' + user.lastName}</p>
-          <p>{bill.isPayment ? 'Payment' : 'Loan'}</p>
-          <p>{bill.isPayment ? bill.paidAmount:bill.receivedAmount}</p>
-          <p>{bill.paidDues}</p>
+          <div className='cell'>{date && date}</div>
+          <div className='cell'>{bill.billNo}</div>
+          <div className='cell'>{bill.loanType}</div>
+          <div className='cell'>{bill.loanNo}</div>
+          <div className='cell'>{user.firstName + ' ' + user.lastName}</div>
+          <div className='cell'>{bill.isPayment ? 'Payment' : 'Loan'}</div>
+          <div className='cell'>{bill.isPayment ? bill.paidAmount:bill.receivedAmount}</div>
+          <div className='cell'>{bill.paidDues}</div>
         </div>
       )}
-      {content}
     </div>
   );
 }

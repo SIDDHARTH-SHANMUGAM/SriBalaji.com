@@ -1,60 +1,40 @@
 .billContainer{
-    position: relative;
-    top: 0px;
+    position: absolute;
+    top: 70px;
     left: 0px;
     width: 100%;
-    background-color: white;
+    background-color:  #1d2b3a;
+    padding: 50px;
     height: 200hv;
-    animation: drop-downy 0.6s ease 200ms backwards;
+    z-index: 6;
+    animation: drop-down 0.6s ease 200ms backwards;
+    box-shadow: 2px 0px 5px 2px rgba(245, 243, 243, 0.368);
+    font-size: 1em;
+    color: white;
 }
-.upper{
-    box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
-    width: 100%;
+
+.billContainer .flex{
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+    flex-direction: column;
 
-    div{
+    .upper{
         display: flex;
-    }
-}
-.profileContainer{
-        width: 700px;
-        display: flex;
-        justify-content: space-around;
-        padding-bottom: 40px;
-    }
-    .profileCard{
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        width: 250px;
+        flex-direction: row;
+        width: 100%;
+        align-items: center;
         justify-content: center;
-        box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.368);
-        border-radius: 5px;
-
-        .imgContainer{
+        gap: 20px;
+        .cell{
             display: flex;
+            align-items: center;
             justify-content: center;
+            gap: 20px;
         }
 
-        img{
-            border-radius: 50%;
-            object-fit: cover;
-            height: 100px;
-            width:100px;
+
+        .cell .title{
+            width: 80px;
+            font-size: 1.25em;
         }
     }
-
-@keyframes drop-downy {
- from {
-  opacity: 0;
-  transform: translateY(-10px);
- }
- to {
-  opacity: 1;
-  transform: translate(0px);
- }
 }
-

@@ -158,7 +158,7 @@ const getTodayLoan = async (req, res) => {
 }
 
 const payLoan = async (req, res) => {
-  const { loanId, paidDues } = req.body;
+  const { loanId, paidDues , billNo} = req.body;
 
   try {
     const loan = await MonthlyLoan.findOne({loanNo: loanId});
@@ -168,11 +168,12 @@ const payLoan = async (req, res) => {
         loan.dues[`month${paidDue.monthNo}`].isPaid = true;
         loan.dues[`month${paidDue.monthNo}`].amount = 0; 
         loan.dues[`month${paidDue.monthNo}`].paidDate = new Date();
+        loan.dues[`month${paidDue.monthNo}`].billNo = billNo;
         c++;
       }
       loan.pendingAmount = (loan.loanAmount/5)*(5-c);
       await loan.save();
-      res.json({ success: true, message: 'done', loan: loan });
+      res.json({ message: 'done', loan: loan });
       }
     } catch (error) {
       console.error('Payment processing error:', error);

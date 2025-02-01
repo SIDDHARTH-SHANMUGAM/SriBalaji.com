@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import './MakeBill.css'
+import { IoAlertOutline } from "react-icons/io5";
 
 function Receive({billNo}) {
-
+    
     
     const token = JSON.parse(sessionStorage.getItem('token'));
     const [loanType, setLoanType] = useState('monthly');
@@ -20,8 +21,11 @@ function Receive({billNo}) {
     const [amount, setAmount ] =useState('');
     const [error, setError ] = useState('');
     const [bill, setBill ] = useState('');
-    const [view, setView] = useState(false);
     const [loanNo, setLoanNo] = useState('');
+    const [isSubmit , setIsSubmit]=useState(false);
+    
+  let menumask
+  let ensureSubmit
 
     useEffect( ()=>
         {
@@ -47,7 +51,9 @@ function Receive({billNo}) {
                 async (res)=>{
                     if(res.data.message==='loanAdded')
                     {
-                        await axios.post('http://localhost:3001/counter/increament', { reqId: 'mlLoanId' }).then( async()=>{
+                        await axios.post('http://localhost:3001/counter/increament', { reqId: 'loanNo' })
+                        .then( async()=>{
+                            console.log("loan added");
                             const isPayment =false;
                             const receivedAmount= amount;
                             const paidAmount=0;
@@ -55,15 +61,20 @@ function Receive({billNo}) {
                             await axios.post('http://localhost:3001/bill/addBill', {
                                 token, billNo, loanType, userId, loanNo, isPayment, receivedAmount, paidAmount, paidDues
                             }).then(async (res)=>{
+                                console.log("bill added");
                                 if(res.data.message==='billAdded')
                                 {
-                                    await axios.post('http://localhost:3001/counter/increament', { reqId: 'billId' })
+                                    await axios.post('http://localhost:3001/counter/increament', { reqId: 'billNo' })
                                     setBill(res.data.bill);
-                                    setView(true);
                                     await axios.post('http://localhost:3001/msg/addMessage', {userId: userId, message:'Alert You have been Received Amount from Sri balaji as a borrower to return in 5 moths due as LoanlNo is '+billNo})
                                     await axios.post('http://localhost:3001/msg/addMessage', {userId: guarantorId, message:'Alert You have been Received Amount from Sri balaji as a guarantor to return in 5 moths due as LoanNo is '+billNo})
+
                                 }
+                            }).catch(error=>{
+                                setError("bill adding error"+error);
                             })
+                        }).catch(error =>{
+                            setError("loan adding error"+error);
                         })
                     }
                 }
@@ -133,7 +144,6 @@ function Receive({billNo}) {
             setError('Id is Only 9 digit');
         }
     }
-
     const handUserMobile = async(e)=>{
         setMobile(e.target.value)
         setUser('')
@@ -194,6 +204,24 @@ function Receive({billNo}) {
         }
 
     }
+
+
+    if(isSubmit)
+      {
+        ensureSubmit =<div className='logout'>
+          <div className='logoutContainer drop-down'>
+            <div className='message'>
+              <IoAlertOutline size='100px'/>
+              <h2>Confirm Transaction</h2>
+            </div>
+            <div className='button-container'>
+              <button onClick={handleSubmit}>Confirm</button>
+              <button onClick={()=> {setIsSubmit(false)}}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      }
+
 
   return (
     <div className='formItems'>
@@ -327,8 +355,10 @@ function Receive({billNo}) {
                 <span>Intrest rate</span>
             </div>
         <div className='button-container'>
-            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={()=>{setIsSubmit(true)}}>Submit</button>
         </div>
+        {ensureSubmit}
+        {menumask}
         {
             error&&
             <div className='error-container drop-right'>

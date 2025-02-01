@@ -1,11 +1,11 @@
 .admin-container {
     width: 100%;
-    height: 100vh;
+    height: auto;
     position: absolute;
     top: 100px;
     left: 0;
     background-color: beige;
-    padding-bottom: 200px;
+    padding-bottom: 50px;
 }
 
 .admin-menu {

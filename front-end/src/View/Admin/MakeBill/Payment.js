@@ -1,28 +1,30 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Due } from '../../components/LoanCard';
+import { Due } from '../components/LoanCard';
 import './MakeBill.css'
 
 function Payment({billNo}) {
     
   const token = JSON.parse(sessionStorage.getItem('token'));
-    const [payLoanNo, setPayLoanNo] = useState('');
+    const [payLoanNo, setPayLoanNo] = useState();
     const [loanType, setLoanType] = useState('monthly');
-    const [mobile, setMobile] = useState('');
-    const [userName, setUserName] = useState('');
-    const [userId, setUserId] = useState('');
-    const [address, setAddress] = useState('');
-    const [message, setMessage ] = useState('');
+    const [mobile, setMobile] = useState();
+    const [userName, setUserName] = useState();
+    const [userId, setUserId] = useState();
+    const [address, setAddress] = useState();
+    const [message, setMessage ] = useState();
     const [guarantor, setGuarantor] = useState('');
-    const [guarantorName, setGuarantorUserName] = useState('');
-    const [guarantorMobile, setGuarantorMobile] = useState('');
-    const [guarantorId, setGuarantorUserId] = useState('');
-    const [guarantorAddress, setGuarantorAddress] = useState('');
-    const [loan, setLoan] = useState('');
+    const [guarantorName, setGuarantorUserName] = useState();
+    const [guarantorMobile, setGuarantorMobile] = useState();
+    const [guarantorId, setGuarantorUserId] = useState();
+    const [guarantorAddress, setGuarantorAddress] = useState();
+    const [loan, setLoan] = useState();
     const [user, setUser] = useState('');
     const [payDues, setPayDues] = useState([]);
-    const [showBill, setShowBill] = useState(false);
     const [payDueString, setPayDueString] = useState('');
+    const [paidAmount, setPaidAmount ] = useState(0);
+
+    console.log(billNo);
 
     const handleLoanNo = async(e)=>{
         setPayLoanNo(e.target.value)
@@ -88,7 +90,6 @@ function Payment({billNo}) {
         }
     }
     
-    const [paidAmount, setPaidAmount ] = useState(0);
     const paidDues =(monthData)=>{
         if (payDues.indexOf(monthData) === -1) {
             setPayDues([...payDues, monthData]);
@@ -96,26 +97,40 @@ function Payment({billNo}) {
             setPayDueString(payDueString+" "+String(monthData.monthNo));
         }
     }
+
     const handleBill =async ()=>{
         if(payDues)
         {
             await axios.post('http://localhost:3001/monthlyLoan/payLoan',{
-                token, loanId : loan.loanNo , paidDues: payDues
+                token, loanId : loan.loanNo , paidDues: payDues, billNo: billNo
             })
-            
-            await axios.post('http://localhost:3001/bill/addBill',{
-                token, billNo : billNo, loanType:loanType, userId: userId, loanNo: loan.loanNo, 
-                isPayment:'true', receivedAmount: 0, paidAmount, paidDues: payDueString
-            }).then((res)=>{
-                setShowBill(res.data.bill);
+            .then(async(res)=>{
+                if(res.data.message === "done")
+                {
+                    await axios.post('http://localhost:3001/bill/addBill',{
+                        token, billNo : billNo, loanType:loanType, userId: userId, loanNo: loan.loanNo, 
+                        isPayment:'true', receivedAmount: 0, paidAmount, paidDues: payDueString
+                    }).then(async (res)=>{
+                        if(res.data.message==='billAdded')
+                        {
+                            await axios.post('http://localhost:3001/counter/increament', { reqId: 'billNo' })
+                            .then((res)=>{
+                                console.log(res.data.message);
 
-            }).catch((e)=>{
-                alert(e);
-            });
+                            })
+                        }
+                    }).catch((e)=>{
+                        alert(e);
+                    });
+                }
 
-            await axios.post('http://localhost:3001/counter/increament', { reqId: 'billId' });
+            })
+            .catch((e)=>{
 
-        console.log(showBill);
+            })
+
+
+
         }
     }
 
@@ -123,7 +138,7 @@ function Payment({billNo}) {
     
   return (
         <div className='formItems'>
-            <div>
+            <div className='input-box'>
                 <label>Loan Type</label>
                 <select
                     value={loanType}
@@ -148,7 +163,7 @@ function Payment({billNo}) {
                 <span>Enter Loan No</span>
             </div>
             <div className='profileContainer'>
-                    {userId&&<>
+                {userId&&<>
                     <div className='profileCard'> 
                         <div className='imgContainer'>
                             {user.imageUrl&&<img src={user.imageUrl} alt='sorry' />}
@@ -157,31 +172,35 @@ function Payment({billNo}) {
                             <input
                                 type="text"
                                 value={userId}
-                                readOnly
+                                onChange={()=>{}}
+                                required
                             />
                             <span>User Id</span>
                         </div>
-                        <div>
+                        <div className='input-box'>
                             <input
                                 type="text"
                                 value={userName}
-                                readOnly
+                                onChange={()=>{}}
+                                required
                             />
                             <span>User Name</span>
                         </div>
-                        <div>
+                        <div className='input-box'>
                             <input
                                 type="text"
                                 value={mobile}
-                                readOnly
+                                onChange={()=>{}}
+                                required
                             />
                             <span>User Mobile</span>
                         </div>
-                        <div>
+                        <div className='input-box'>
                             <input
                                 type="text"
                                 value={address}
-                                readOnly
+                                onChange={()=>{}}
+                                required
                             />
                             <span>User Address</span>
                         </div>
@@ -190,48 +209,54 @@ function Payment({billNo}) {
                         <div className='imgContainer'>
                             {guarantor.imageUrl&&<img src={guarantor.imageUrl} alt='sorry' />}
                         </div>
-                    <div>
+                    <div className='input-box'>
                         <input
                             type="text"
                             value={guarantorId}
-                            readOnly
+                            onChange={()=>{}}
+                            required
                         />
                         <span>Guarantor Id</span>
                     </div>
-                    <div>
+                    <div className='input-box'>
                         <input
                             type="text"
                             value={guarantorName}
-                            readOnly
+                            onChange={()=>{}}
+                            required
                         />
                         <span>Guarantor Name</span>
                     </div>
-                    <div>
+                    <div className='input-box'>
                         <input
                             type="text"
                             value={guarantorMobile}
-                            readOnly
+                            onChange={()=>{}}
+                            required
                         />
                         <span>Guarantor Mobile</span>
                     </div>
-                    <div>
+                    <div className='input-box'>
                         <input
                             type="text"
                             value={guarantorAddress}
-                            readOnly
+                            onChange={()=>{}}
+                            required
                         />
                         <span>Guarantor Address</span>
                     </div>
                 </div>
             </>}
         </div>
-        {!showBill&&userName&&<div className='loanCont'>
+        {userName&&
+        <div className='loanCont'>
             <div className='loanNav'>
-                <p>Due Date </p>
-                <p >Pending </p>
-                <p>Bill No </p>
-                <p>Over Due </p>
-                <p>Paid On </p>
+                <div className='cell'>Paid Status</div>
+                <div className='cell'>Due Date </div>
+                <div className='cell' >Pending </div>
+                <div className='cell'>Bill No </div>
+                <div className='cell'>Over Due </div>
+                <div className='cell'>Paid On </div>
             </div>
             {loan.dues && Object.values(loan.dues).map((monthData) => (
                 <Due key={monthData._id} monthData={monthData} getPaidDues= {paidDues}/>
@@ -239,7 +264,11 @@ function Payment({billNo}) {
         </div>}
         {message&&message}
 
-        {!showBill&&userName&&<button onClick={handleBill}>Get Bill</button>}
+        {userName&&
+        <div className='button-container'>
+            <button onClick={handleBill}>Get Bill</button>
+        </div>
+        }
         {billMask}
     </div>
   )

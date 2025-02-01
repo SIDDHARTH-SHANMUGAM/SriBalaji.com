@@ -9,7 +9,7 @@ import TodayList from '../TodayList/TodayList';
 function Admin() {
   const [showAllLoans, setShowAllLoans] = useState(false);
   const [showAllBills, setShowAllBills] = useState(false);
-  const [showMakeBills, setShowMakeBills] = useState(false);
+  const [showMakeBills, setShowMakeBills] = useState(true);
   const [showThisWeek, setShowThisWeek] = useState(false);
   const [showToday, setShowToday] = useState(false);
   let allLoansmask;

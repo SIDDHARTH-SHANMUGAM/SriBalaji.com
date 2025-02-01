@@ -3,7 +3,7 @@ const Bill = require('../models/BillModel');
 const addBill = async(req, res)=>{
   try{
     const { billNo, loanType, userId, loanNo, isPayment, receivedAmount, paidAmount, paidDues}= req.body;
-    console.log(paidDues);
+    console.log("billController addBill :"+paidDues);
     const str = new Date().getDate()+1;
     const str2 = new Date().getMonth()+1;
     const str3 = new Date().getFullYear();
@@ -19,9 +19,14 @@ const addBill = async(req, res)=>{
       paidAmount: paidAmount,
       paidDues: paidDues
     })
-    data.save().then(()=> {res.json({message:'billAdded', bill: data})})
-    .catch((e)=> {res.json({message: 'errorOccuredInBillInserting'}); console.log(e)})
-    
+    data.save()
+    .then(()=> {
+      res.json({message:'billAdded', bill: data})
+    })
+    .catch((e)=> {
+      console.log("billcontroller adding error"+e);
+      res.json({message: 'errorOccuredInBillInserting'}); 
+    })
   }
   catch(e)
   {

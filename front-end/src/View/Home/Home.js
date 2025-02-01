@@ -129,7 +129,7 @@ function Home() {
             >
               {
                 obj.map((ob, i)=>{
-                  return <SwiperSlide className='swiper'>
+                  return <SwiperSlide key={i}  className='swiper'>
                     <div className={`card ${active === i && 'active2'}`}>
                       <img src={`asserts/${ob.img}.jpg`} alt={`${ob.text}`}/>
                       <h2 className='text'>{ob.text}</h2>

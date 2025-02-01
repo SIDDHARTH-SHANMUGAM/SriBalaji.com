@@ -12,16 +12,16 @@ function Bill({bill, user}) {
     <div className='billContainer'>
       <div className='flex'>
       <div className='upper'>
-        <div>
-          <p>Date :</p>
+        <div className='cell'>
+          <div className='title'><p>Date :</p></div >
           <p>{formatDate(bill.date)}</p>
         </div>
-        <div>
-          <p>Bill No :</p>
+        <div className='cell'>
+          <div className='title'><p>Bill No :</p></div >
           <p>{bill.billNo}</p>
         </div>
-        <div>
-          <p>Loan Type :</p>
+        <div className='cell'>
+          <div className='title'><p>Loan Type :</p></div >
           <p>{bill.loanType}</p>
         </div>
       </div>
